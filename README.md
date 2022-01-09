@@ -12,4 +12,4 @@ MegaStitch is a novel method for stitchig high resolution image in large scale w
 
 ```
 
-You can also find all the datasets as well as the Ground Control Points (GCPs) for each of them at [this](www.google.com) link.
+You can also find all the datasets as well as the Ground Control Points (GCPs) for each of them at [this](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/MegaStitch/megastitch_data.tar) link.
