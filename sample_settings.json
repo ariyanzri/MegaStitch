@@ -1,0 +1,18 @@
+{
+    "grid_w": 3,
+    "grid_h": 7,
+    "scale": 0.2,
+    "nearest_number": 4,
+    "discard_transformation_perc_inlier": 0.4,
+    "transformation": "similarity",
+    "percentage_next_neighbor": 0.6,
+    "cores_to_use": 55,
+    "draw_GCPs": true,
+    "max_no_inliers": 5,
+    "number_bins": 5,
+    "size_bins": 5,
+    "do_cross_validation": false,
+    "sub_set_choosing": false,
+    "N_perc": 0.5,
+    "E_perc": 0.5
+}
