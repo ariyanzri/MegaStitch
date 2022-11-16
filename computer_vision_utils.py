@@ -231,6 +231,9 @@ def estimate_transformation_from_SIFT(
 
     if transformation == Transformation.homography:
 
+        if len(src) < 4:
+            return None, None, 0, None
+
         T, masked = cv2.findHomography(
             src, dst, maxIters=500, confidence=0.99, method=cv2.RANSAC
         )
