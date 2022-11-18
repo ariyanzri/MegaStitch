@@ -8,13 +8,11 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import computer_vision_utils as cv_util
 import multiprocessing
-import MGRAPH
-import Old_MegaStitch
 import json
-import Bundle_Adjustment
 import pickle
 import gc
 import ProjectionOptimization
+import utils_MGRAPH
 from Customized_myltiprocessing import MyPool
 from GPSPhoto import gpsphoto
 
@@ -972,609 +970,6 @@ class Field:
         return image_corners_dict
 
     # -----------------------------------------------------------
-    # ------------ Old Geo-correction Methods -------------------
-    # -----------------------------------------------------------
-
-    def geo_correct_MGRAPH(self, do_optimize=True):
-
-        tr = self.generate_neighbor_transformations()
-
-        self.reference_image.load_img()
-
-        x = self.reference_image.img.shape[1]
-        y = self.reference_image.img.shape[0]
-
-        mg = MGRAPH.MGRAPH(
-            self.images,
-            tr,
-            self.image_name_to_index_dict,
-            self.get_positions(),
-            self.reference_image,
-            settings.transformation,
-            settings.use_ceres_MGRAPH,
-            settings.max_no_inliers,
-        )
-
-        if do_optimize:
-            absolute_H = mg.optimize()
-
-        else:
-            absolute_H = mg.absolute_homography_dict
-
-        image_coords_dict = {}
-
-        w = self.reference_image.img.shape[1]
-        h = self.reference_image.img.shape[0]
-
-        for img in self.images:
-
-            image_coords_dict[img.name] = {}
-
-            if settings.normalize_key_points:
-                corners = {
-                    "UL": [-0.5, -0.5, 1],
-                    "UR": [0.5, -0.5, 1],
-                    "LR": [0.5, 0.5, 1],
-                    "LL": [-0.5, 0.5, 1],
-                }
-            else:
-                corners = {
-                    "UL": [0, 0, 1],
-                    "UR": [x, 0, 1],
-                    "LR": [x, y, 1],
-                    "LL": [0, y, 1],
-                }
-
-            H = absolute_H[img.name]
-
-            for key in corners:
-
-                new_corner = np.matmul(H, corners[key])
-                new_corner = new_corner / new_corner[2]
-
-                if settings.normalize_key_points:
-
-                    image_coords_dict[img.name][key] = [
-                        int(w * (new_corner[0]) + w / 2),
-                        int(h * (new_corner[1]) + h / 2),
-                    ]
-
-                else:
-
-                    image_coords_dict[img.name][key] = [
-                        int(new_corner[0]),
-                        int(new_corner[1]),
-                    ]
-
-        print(
-            ">>> MGRAPH global optimization and coordinate calculation finished successfully."
-        )
-
-        return image_coords_dict
-
-    def geo_correct_MEGASTITCH_BNDL_Gantry_specific(self, coords, anchors_dict):
-
-        tr = self.generate_neighbor_transformations()
-
-        self.reference_image.load_img()
-
-        x = self.reference_image.img.shape[1]
-        y = self.reference_image.img.shape[0]
-
-        GPS_c = 10.48e-6
-        RPJ_c = 2.42e-6
-        perc_drop = settings.discard_transformation_perc_inlier
-
-        MegaStitchGPS = Bundle_Adjustment.GPS_Corner_Based_Bundle_Adjustment(
-            self.images,
-            tr,
-            coords,
-            settings.transformation,
-            x,
-            y,
-            GPS_c,
-            RPJ_c,
-            anchors_dict,
-            settings.scale,
-            settings.max_no_inliers,
-            perc_drop,
-        )
-        corrected_GPS_coords = MegaStitchGPS.solve()
-
-        print(
-            ">>> MEGASTITCH global optimization with GPS priors and coordinate calculation finished successfully."
-        )
-
-        return corrected_GPS_coords
-
-    def geo_correct_MEGASTITCH(self):
-
-        tr = self.generate_neighbor_transformations()
-
-        self.reference_image.load_img()
-
-        x = self.reference_image.img.shape[1]
-        y = self.reference_image.img.shape[0]
-
-        img_ref_coords = {}
-
-        if settings.normalize_key_points:
-
-            if (
-                settings.use_homogenouse_coords
-                and settings.transformation == cv_util.Transformation.homography
-            ):
-
-                img_ref_coords["UL"] = (-0.5, -0.5, 1)
-                img_ref_coords["UR"] = (0.5, -0.5, 1)
-                img_ref_coords["LR"] = (0.5, 0.5, 1)
-                img_ref_coords["LL"] = (-0.5, 0.5, 1)
-
-            else:
-
-                img_ref_coords["UL"] = (-0.5, -0.5)
-                img_ref_coords["UR"] = (0.5, -0.5)
-                img_ref_coords["LR"] = (0.5, 0.5)
-                img_ref_coords["LL"] = (-0.5, 0.5)
-        else:
-
-            if (
-                settings.use_homogenouse_coords
-                and settings.transformation == cv_util.Transformation.homography
-            ):
-
-                img_ref_coords["UL"] = (0, 0, 1)
-                img_ref_coords["UR"] = (x, 0, 1)
-                img_ref_coords["LR"] = (x, y, 1)
-                img_ref_coords["LL"] = (0, y, 1)
-
-            else:
-
-                img_ref_coords["UL"] = (0, 0)
-                img_ref_coords["UR"] = (x, 0)
-                img_ref_coords["LR"] = (x, y)
-                img_ref_coords["LL"] = (0, y)
-
-        if (
-            settings.use_homogenouse_coords
-            and settings.transformation == cv_util.Transformation.homography
-        ):
-
-            mega_stitch = Old_MegaStitch.MegaStitch_3L1P_Homogenouse(
-                self.images,
-                tr,
-                [1, 2],
-                self.reference_image.name,
-                img_ref_coords,
-                settings.transformation,
-            )
-
-        else:
-
-            mega_stitch = Old_MegaStitch.MegaStitch_3L1P(
-                self.images,
-                tr,
-                [1, 2],
-                self.reference_image.name,
-                img_ref_coords,
-                settings.transformation,
-            )
-
-        new_coords = mega_stitch.three_loop_least_squares_correction()
-
-        image_coords_dict = {}
-
-        w = self.reference_image.img.shape[1]
-        h = self.reference_image.img.shape[0]
-
-        for img in self.images:
-
-            image_coords_dict[img.name] = {}
-
-            for key in new_coords[img.name]:
-
-                if settings.normalize_key_points:
-
-                    if (
-                        settings.use_homogenouse_coords
-                        and settings.transformation == cv_util.Transformation.homography
-                    ):
-
-                        image_coords_dict[img.name][key] = [
-                            int(
-                                w
-                                * (
-                                    new_coords[img.name][key][0]
-                                    / new_coords[img.name][key][2]
-                                )
-                                + w / 2
-                            ),
-                            int(
-                                h
-                                * (
-                                    new_coords[img.name][key][1]
-                                    / new_coords[img.name][key][2]
-                                )
-                                + h / 2
-                            ),
-                        ]
-
-                    else:
-
-                        image_coords_dict[img.name][key] = [
-                            int(w * (new_coords[img.name][key][0]) + w / 2),
-                            int(h * (new_coords[img.name][key][1]) + h / 2),
-                        ]
-
-                else:
-
-                    if (
-                        settings.use_homogenouse_coords
-                        and settings.transformation == cv_util.Transformation.homography
-                    ):
-
-                        image_coords_dict[img.name][key] = [
-                            int(
-                                new_coords[img.name][key][0]
-                                / new_coords[img.name][key][2]
-                            ),
-                            int(
-                                new_coords[img.name][key][1]
-                                / new_coords[img.name][key][2]
-                            ),
-                        ]
-
-                    else:
-
-                        image_coords_dict[img.name][key] = [
-                            int(new_coords[img.name][key][0]),
-                            int(new_coords[img.name][key][1]),
-                        ]
-
-        print(
-            ">>> MEGASTITCH global optimization and coordinate calculation finished successfully."
-        )
-
-        return image_coords_dict
-
-    def geo_correct_MEGASTITCH_Groups(self):
-
-        tr = self.generate_neighbor_transformations()
-
-        self.reference_image.load_img()
-
-        x = self.reference_image.img.shape[1]
-        y = self.reference_image.img.shape[0]
-
-        mega_stitch = Old_MegaStitch.MegaStitch_Hybrid_Multi_Group_Drone(
-            self.images,
-            tr,
-            [1, 2],
-            settings.transformation,
-            x,
-            y,
-            settings.normalize_key_points,
-            settings.use_homogenouse_coords,
-            settings.use_parallel_multiGroup,
-            settings.no_cores_multiGroup,
-            settings.number_equation_to_pick_from_unique_tuples,
-        )
-
-        new_coords = mega_stitch.group_propagation_correction(
-            settings.grid_w, settings.grid_h, settings.min_intersect
-        )
-
-        image_coords_dict = {}
-
-        w = self.reference_image.img.shape[1]
-        h = self.reference_image.img.shape[0]
-
-        for img in self.images:
-
-            image_coords_dict[img.name] = {}
-
-            for key in new_coords[img.name]:
-
-                if settings.normalize_key_points:
-
-                    if (
-                        settings.use_homogenouse_coords
-                        and settings.transformation == cv_util.Transformation.homography
-                    ):
-
-                        image_coords_dict[img.name][key] = [
-                            int(
-                                w
-                                * (
-                                    new_coords[img.name][key][0]
-                                    / new_coords[img.name][key][2]
-                                )
-                                + w / 2
-                            ),
-                            int(
-                                h
-                                * (
-                                    new_coords[img.name][key][1]
-                                    / new_coords[img.name][key][2]
-                                )
-                                + h / 2
-                            ),
-                        ]
-
-                    else:
-
-                        image_coords_dict[img.name][key] = [
-                            int(w * (new_coords[img.name][key][0]) + w / 2),
-                            int(h * (new_coords[img.name][key][1]) + h / 2),
-                        ]
-
-                else:
-
-                    if (
-                        settings.use_homogenouse_coords
-                        and settings.transformation == cv_util.Transformation.homography
-                    ):
-
-                        image_coords_dict[img.name][key] = [
-                            int(
-                                new_coords[img.name][key][0]
-                                / new_coords[img.name][key][2]
-                            ),
-                            int(
-                                new_coords[img.name][key][1]
-                                / new_coords[img.name][key][2]
-                            ),
-                        ]
-
-                    else:
-
-                        image_coords_dict[img.name][key] = [
-                            int(new_coords[img.name][key][0]),
-                            int(new_coords[img.name][key][1]),
-                        ]
-
-        print(
-            ">>> MEGASTITCH_Replicas global optimization and coordinate calculation finished successfully."
-        )
-
-        return image_coords_dict
-
-    def geo_correct_BundleAdjustment(self, init_coords=None):
-
-        tr = self.generate_neighbor_transformations()
-
-        self.reference_image.load_img()
-
-        x = self.reference_image.img.shape[1]
-        y = self.reference_image.img.shape[0]
-
-        bundle_adjuster = Bundle_Adjustment.Bundle_Adjustment(
-            self.images,
-            tr,
-            init_coords,
-            [1, 0.1],
-            settings.transformation,
-            x,
-            y,
-            settings.normalize_key_points,
-            self.reference_image.name,
-            settings.max_no_inliers,
-        )
-        new_coords, absolute_H = bundle_adjuster.solve()
-
-        image_coords_dict = {}
-
-        w = self.reference_image.img.shape[1]
-        h = self.reference_image.img.shape[0]
-
-        for img in self.images:
-
-            image_coords_dict[img.name] = {}
-
-            for key in new_coords[img.name]:
-
-                if settings.normalize_key_points:
-
-                    if (
-                        settings.use_homogenouse_coords
-                        and settings.transformation == cv_util.Transformation.homography
-                    ):
-
-                        image_coords_dict[img.name][Key] = [
-                            int(
-                                w
-                                * (
-                                    new_coords[img.name][key][0]
-                                    / new_coords[img.name][key][2]
-                                )
-                                + w / 2
-                            ),
-                            int(
-                                h
-                                * (
-                                    new_coords[img.name][key][1]
-                                    / new_coords[img.name][key][2]
-                                )
-                                + h / 2
-                            ),
-                        ]
-
-                    else:
-
-                        image_coords_dict[img.name][key] = [
-                            int(w * (new_coords[img.name][key][0]) + w / 2),
-                            int(h * (new_coords[img.name][key][1]) + h / 2),
-                        ]
-
-                else:
-
-                    if (
-                        settings.use_homogenouse_coords
-                        and settings.transformation == cv_util.Transformation.homography
-                    ):
-
-                        image_coords_dict[img.name][key] = [
-                            int(
-                                new_coords[img.name][key][0]
-                                / new_coords[img.name][key][2]
-                            ),
-                            int(
-                                new_coords[img.name][key][1]
-                                / new_coords[img.name][key][2]
-                            ),
-                        ]
-
-                    else:
-
-                        image_coords_dict[img.name][key] = [
-                            int(new_coords[img.name][key][0]),
-                            int(new_coords[img.name][key][1]),
-                        ]
-
-        print(
-            ">>> Bundle Adjustment global optimization and coordinate calculation finished successfully."
-        )
-
-        return image_coords_dict
-
-    def geo_correct_MegaStitch_Homography(self):
-
-        tr = self.generate_neighbor_transformations()
-
-        self.reference_image.load_img()
-
-        x = self.reference_image.img.shape[1]
-        y = self.reference_image.img.shape[0]
-
-        img_ref_coords = {}
-
-        if settings.normalize_key_points:
-
-            if (
-                settings.use_homogenouse_coords
-                and settings.transformation == cv_util.Transformation.homography
-            ):
-
-                img_ref_coords["UL"] = (-0.5, -0.5, 1)
-                img_ref_coords["UR"] = (0.5, -0.5, 1)
-                img_ref_coords["LR"] = (0.5, 0.5, 1)
-                img_ref_coords["LL"] = (-0.5, 0.5, 1)
-
-            else:
-
-                img_ref_coords["UL"] = (-0.5, -0.5)
-                img_ref_coords["UR"] = (0.5, -0.5)
-                img_ref_coords["LR"] = (0.5, 0.5)
-                img_ref_coords["LL"] = (-0.5, 0.5)
-        else:
-
-            if (
-                settings.use_homogenouse_coords
-                and settings.transformation == cv_util.Transformation.homography
-            ):
-
-                img_ref_coords["UL"] = (0, 0, 1)
-                img_ref_coords["UR"] = (x, 0, 1)
-                img_ref_coords["LR"] = (x, y, 1)
-                img_ref_coords["LL"] = (0, y, 1)
-
-            else:
-
-                img_ref_coords["UL"] = (0, 0)
-                img_ref_coords["UR"] = (x, 0)
-                img_ref_coords["LR"] = (x, y)
-                img_ref_coords["LL"] = (0, y)
-
-        mega_stitch = Old_MegaStitch.MegaStitch_Homography(
-            self.images,
-            tr,
-            [1, 2],
-            self.reference_image.name,
-            img_ref_coords,
-            x,
-            y,
-            settings.normalize_key_points,
-            settings.max_no_inliers,
-        )
-
-        new_coords = mega_stitch.solve()
-
-        image_coords_dict = {}
-
-        w = self.reference_image.img.shape[1]
-        h = self.reference_image.img.shape[0]
-
-        for img in self.images:
-
-            image_coords_dict[img.name] = {}
-
-            for key in new_coords[img.name]:
-
-                if settings.normalize_key_points:
-
-                    if (
-                        settings.use_homogenouse_coords
-                        and settings.transformation == cv_util.Transformation.homography
-                    ):
-
-                        image_coords_dict[img.name][key] = [
-                            int(
-                                w
-                                * (
-                                    new_coords[img.name][key][0]
-                                    / new_coords[img.name][key][2]
-                                )
-                                + w / 2
-                            ),
-                            int(
-                                h
-                                * (
-                                    new_coords[img.name][key][1]
-                                    / new_coords[img.name][key][2]
-                                )
-                                + h / 2
-                            ),
-                        ]
-
-                    else:
-
-                        image_coords_dict[img.name][key] = [
-                            int(w * (new_coords[img.name][key][0]) + w / 2),
-                            int(h * (new_coords[img.name][key][1]) + h / 2),
-                        ]
-
-                else:
-
-                    if (
-                        settings.use_homogenouse_coords
-                        and settings.transformation == cv_util.Transformation.homography
-                    ):
-
-                        image_coords_dict[img.name][key] = [
-                            int(
-                                new_coords[img.name][key][0]
-                                / new_coords[img.name][key][2]
-                            ),
-                            int(
-                                new_coords[img.name][key][1]
-                                / new_coords[img.name][key][2]
-                            ),
-                        ]
-
-                    else:
-
-                        image_coords_dict[img.name][key] = [
-                            int(new_coords[img.name][key][0]),
-                            int(new_coords[img.name][key][1]),
-                        ]
-
-        print(
-            ">>> MEGASTITCH global optimization and coordinate calculation finished successfully."
-        )
-
-        return image_coords_dict
-
-    # -----------------------------------------------------------
     # ------------ Error Measurement Methods --------------------
     # -----------------------------------------------------------
 
@@ -2418,6 +1813,103 @@ class Field:
     # -----------------------------------------------------------
     # ------------ New Geo-correction Methods -------------------
     # -----------------------------------------------------------
+
+    def geo_correct_MGRAPH(self, anchors_dict):
+
+        if self.images[0].lat is None:
+            print(
+                ":: The images in this dataset does not have geo-referencing information. MGRAPH requires GPS information of each images."
+            )
+
+        tr = self.generate_neighbor_transformations()
+
+        self.reference_image.load_img()
+
+        x = self.reference_image.img.shape[1]
+        y = self.reference_image.img.shape[0]
+
+        mg = utils_MGRAPH.MGRAPH(
+            self.images,
+            tr,
+            self.image_name_to_index_dict,
+            self.get_positions(),
+            self.reference_image,
+            settings.transformation,
+            settings.use_ceres_MGRAPH,
+            settings.max_no_inliers,
+        )
+
+        absolute_transformations = mg.optimize()
+
+        image_coords_dict = {}
+
+        w = self.reference_image.img.shape[1]
+        h = self.reference_image.img.shape[0]
+
+        for img in self.images:
+
+            image_coords_dict[img.name] = {}
+
+            if settings.normalize_key_points:
+                corners = {
+                    "UL": [-0.5, -0.5, 1],
+                    "UR": [0.5, -0.5, 1],
+                    "LR": [0.5, 0.5, 1],
+                    "LL": [-0.5, 0.5, 1],
+                }
+            else:
+                corners = {
+                    "UL": [0, 0, 1],
+                    "UR": [x, 0, 1],
+                    "LR": [x, y, 1],
+                    "LL": [0, y, 1],
+                }
+
+            H = absolute_transformations[img.name]
+
+            for key in corners:
+
+                new_corner = np.matmul(H, corners[key])
+                new_corner = new_corner / new_corner[2]
+
+                if settings.normalize_key_points:
+
+                    image_coords_dict[img.name][key] = [
+                        int(w * (new_corner[0]) + w / 2),
+                        int(h * (new_corner[1]) + h / 2),
+                    ]
+
+                else:
+
+                    image_coords_dict[img.name][key] = [
+                        int(new_corner[0]),
+                        int(new_corner[1]),
+                    ]
+
+        H, H_inv, GCP_RMSE, Sim_GCPs, all_GCPs = self.report_GCP_error_for_Drone(
+            absolute_transformations, anchors_dict
+        )
+
+        RMSE, RMSE_Normalized = self.calculate_projection_error(
+            anchors_dict, image_coords_dict, absolute_transformations, tr, -1, H=H
+        )
+
+        print(":: Projection RMSE: {0}".format(RMSE))
+        print(":: Normalized Projection RMSE: {0}".format(RMSE_Normalized))
+
+        print(
+            ">>> MGRAPH global optimization and coordinate calculation finished successfully."
+        )
+
+        return (
+            image_coords_dict,
+            H,
+            H_inv,
+            absolute_transformations,
+            [GCP_RMSE, RMSE, RMSE_Normalized],
+            Sim_GCPs,
+            all_GCPs,
+        )
 
     def geo_correct_MegaStitchSimilarity(self, anchors_dict):
 

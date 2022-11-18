@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import sys
 import subprocess
 import os
+import computer_vision_utils as cv_util
+from scipy.optimize import leastsq
 
 # from non_linear_optimizer import Non_Linear_Reprojection_Method
 
@@ -200,8 +202,8 @@ class Ceres_CPP:
                     kp1 = self.images_dict[img1].kp[m.trainIdx]
                     kp2 = self.images_dict[img2].kp[m.queryIdx]
 
-                    p1 = (kp1.pt[0], kp1.pt[1])
-                    p2 = (kp2.pt[0], kp2.pt[1])
+                    p1 = (kp1[0], kp1[1])
+                    p2 = (kp2[0], kp2[1])
 
                     file_content += "{0} {1} {2} {3} ".format(
                         p1[0], p1[1], p2[0], p2[1]
@@ -248,6 +250,203 @@ class Ceres_CPP:
                 break
 
         return new_absolute_homography_dict
+
+
+class Non_Linear_Reprojection_Method:
+    def __init__(
+        self,
+        image_absolute_H_dict,
+        image_pairwise_dict,
+        image_N_to_i_dict,
+        mx_matches,
+        images_dict,
+        transformation_type,
+        refname,
+    ):
+
+        self.absolute_H_dict = image_absolute_H_dict
+        self.pairwise_H_dict = image_pairwise_dict
+        self.image_name_to_index_dict = image_N_to_i_dict
+        self.max_matches_to_use = mx_matches
+        self.images_dict = images_dict
+
+        H_0 = np.zeros(9 * len(images_dict))
+        for img_name in self.absolute_H_dict:
+            i = self.image_name_to_index_dict[img_name]
+            H_0[i * 9 : i * 9 + 9] = self.absolute_H_dict[img_name].reshape(9)
+
+        self.H_0 = H_0
+        self.total_absolute_H = len(self.H_0) / 9
+        self.transformation_type = transformation_type
+        self.image_ref_name = refname
+
+    def get_residuals(self, X):
+
+        residuals = []
+
+        for img1_name in self.pairwise_H_dict:
+
+            if img1_name == self.image_ref_name:
+
+                i = self.image_name_to_index_dict[img1_name]
+                H1_tmp = X[i * 9 : i * 9 + 9]
+                H1_tmp = H1_tmp.reshape(3, 3)
+
+                residuals.append(H1_tmp[0, 1])
+                residuals.append(H1_tmp[0, 2])
+                residuals.append(H1_tmp[1, 0])
+                residuals.append(H1_tmp[1, 2])
+                residuals.append(H1_tmp[2, 0])
+                residuals.append(H1_tmp[2, 1])
+                residuals.append(H1_tmp[0, 0] - 1)
+                residuals.append(H1_tmp[1, 1] - 1)
+                residuals.append(H1_tmp[2, 2] - 1)
+
+            for img2_name in self.pairwise_H_dict[img1_name]:
+
+                matches = self.pairwise_H_dict[img1_name][img2_name][1]
+
+                inliers = self.pairwise_H_dict[img1_name][img2_name][3]
+
+                i = self.image_name_to_index_dict[img1_name]
+                j = self.image_name_to_index_dict[img2_name]
+
+                H1_tmp = X[i * 9 : i * 9 + 9]
+                H2_tmp = X[j * 9 : j * 9 + 9]
+
+                H1_tmp = H1_tmp.reshape(3, 3)
+                H2_tmp = H2_tmp.reshape(3, 3)
+
+                H1 = np.eye(3)
+                H2 = np.eye(3)
+
+                if self.transformation_type == cv_util.Transformation.translation:
+
+                    residuals.append(H1_tmp[0, 1])
+                    residuals.append(H1_tmp[1, 0])
+                    residuals.append(H1_tmp[2, 0])
+                    residuals.append(H1_tmp[2, 1])
+                    residuals.append(H1_tmp[0, 0] - 1)
+                    residuals.append(H1_tmp[1, 1] - 1)
+                    residuals.append(H1_tmp[2, 2] - 1)
+
+                    H1[0, 2] = H1_tmp[0, 2]
+                    H1[1, 2] = H1_tmp[1, 2]
+
+                    residuals.append(H2_tmp[0, 1])
+                    residuals.append(H2_tmp[1, 0])
+                    residuals.append(H2_tmp[2, 0])
+                    residuals.append(H2_tmp[2, 1])
+                    residuals.append(H2_tmp[0, 0] - 1)
+                    residuals.append(H2_tmp[1, 1] - 1)
+                    residuals.append(H2_tmp[2, 2] - 1)
+
+                    H2[0, 2] = H2_tmp[0, 2]
+                    H2[1, 2] = H2_tmp[1, 2]
+
+                elif self.transformation_type == cv_util.Transformation.similarity:
+
+                    residuals.append(H1_tmp[2, 0])
+                    residuals.append(H1_tmp[2, 1])
+                    residuals.append(H1_tmp[2, 2] - 1)
+
+                    H1[0, :] = H1_tmp[0, :]
+                    H1[1, :] = H1_tmp[1, :]
+
+                    residuals.append(H1[0, 0] - H1[1, 1])
+                    residuals.append(H1[0, 1] + H1[1, 0])
+
+                    residuals.append(H2_tmp[2, 0])
+                    residuals.append(H2_tmp[2, 1])
+                    residuals.append(H2_tmp[2, 2] - 1)
+
+                    H2[0, :] = H2_tmp[0, :]
+                    H2[1, :] = H2_tmp[1, :]
+
+                    residuals.append(H2[0, 0] - H2[1, 1])
+                    residuals.append(H2[0, 1] + H2[1, 0])
+
+                elif self.transformation_type == cv_util.Transformation.affine:
+
+                    residuals.append(H1_tmp[2, 0])
+                    residuals.append(H1_tmp[2, 1])
+                    residuals.append(H1_tmp[2, 2] - 1)
+
+                    H1[0, :] = H1_tmp[0, :]
+                    H1[1, :] = H1_tmp[1, :]
+
+                    residuals.append(H2_tmp[2, 0])
+                    residuals.append(H2_tmp[2, 1])
+                    residuals.append(H2_tmp[2, 2] - 1)
+
+                    H2[0, :] = H2_tmp[0, :]
+                    H2[1, :] = H2_tmp[1, :]
+
+                elif self.transformation_type == cv_util.Transformation.homography:
+
+                    residuals.append(H1_tmp[2, 2] - 1)
+
+                    H1[0, :] = H1_tmp[0, :]
+                    H1[1, :] = H1_tmp[1, :]
+                    H1[2, :2] = H1_tmp[2, :2]
+
+                    residuals.append(H2_tmp[2, 2] - 1)
+
+                    H2[0, :] = H2_tmp[0, :]
+                    H2[1, :] = H2_tmp[1, :]
+                    H2[2, :2] = H2_tmp[2, :2]
+
+                if np.linalg.det(H1) == 0:
+                    continue
+
+                M = np.matmul(np.linalg.inv(H1), H2)
+                inlier_counter = 0
+
+                for i, m in enumerate(matches):
+
+                    if inliers[i, 0] == 0:
+                        continue
+
+                    kp1 = self.images_dict[img1_name].kp[m.trainIdx]
+                    kp2 = self.images_dict[img2_name].kp[m.queryIdx]
+
+                    p1 = (kp1[0], kp1[1])
+                    p2 = (kp2[0], kp2[1])
+
+                    p1_new = np.matmul(M, np.array([p2[0], p2[1], 1]))
+                    p1_new = p1_new / p1_new[2]
+
+                    tmp = np.sqrt(np.sum((p1 - p1_new[:2]) ** 2))
+
+                    residuals.append(tmp)
+                    inlier_counter += 1
+
+                    if inlier_counter >= self.max_matches_to_use:
+                        break
+
+        return residuals
+
+    def solve(self):
+
+        resbefore = np.mean(self.get_residuals(self.H_0))
+
+        x, flag = leastsq(self.get_residuals, self.H_0, maxfev=10 * len(self.H_0))
+        new_abs_homography_dict = {}
+
+        for image_name in self.absolute_H_dict:
+            i = self.image_name_to_index_dict[image_name]
+            H = np.reshape(x[i * 9 : i * 9 + 9], (3, 3))
+            new_abs_homography_dict[image_name] = H
+
+        resafter = np.mean(self.get_residuals(x))
+
+        print(
+            ">>> MGRAPH non linear optimization finished and absolute homographies updated successfully. Average residual before and after: {0}, {1}".format(
+                round(resbefore, 2), round(resafter, 2)
+            )
+        )
+
+        return new_abs_homography_dict
 
 
 class MGRAPH:
@@ -374,14 +573,14 @@ class MGRAPH:
                 self.image_index_to_name_dict,
                 self.pairwise_homography_dict,
                 self.absolute_homography_dict,
-                "/home/ariyan/Desktop/tmp.txt",
+                "tmp.txt",
                 20,
             )
             cpp.save_to_file()
 
             command = "./cpp/homography_global_optimization"
 
-            process = subprocess.Popen([command, "/home/ariyan/Desktop/tmp.txt"])
+            process = subprocess.Popen([command, "tmp.txt"])
             process.wait()
 
             self.absolute_homography_dict = cpp.load_from_file()

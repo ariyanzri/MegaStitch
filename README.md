@@ -19,24 +19,26 @@ This README contains instructions on how to get the data that were used in the p
 ## Data
 <hr>
 
-You can also find all the datasets as well as the Ground Control Points (GCPs) for each of them at [this](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/MegaStitch/megastitch_data.tar) link. The tar file contains XXX.
+You can also find all the datasets as well as the Ground Control Points (GCPs) for each of them at [this](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/MegaStitch/megastitch_data.tar) link. 
 
 ## Requirements and Installation
 <hr>
 
-Currently, there are no installation scripts for this repo. In order to use MegaStitch, you need to make sure that you have all the required python packages and files, and based on your needs, you need to run one of the main entry points of the repo. For your conveniece, we have created a conda requirement file at THIS LINK XXX, from which a conda virtual env can be created using the following command:
+Currently, there are no installation scripts for this repo. In order to use MegaStitch, you need to make sure that you have all the required python packages and files, and based on your needs, you need to run one of the main entry points of the repo. You can find the list of packages we installed on our conda environment at [this text file](https://github.com/ariyanzri/MegaStitch/blob/main/requirements.txt). It is very important to install the same versions of some of these packages in order for the code to run.  
 
-```
-conda env create -f requirements.yaml
-```
-
-## Running MegaStitch
+## Running MegaStitch and MGRAPH
 <hr>
 
 MegaStitch can be used to stitch and geo-correct a different variety of images. These images can either contain approximate geo-referencing, or not. We tested MegaStitch on different drone datasets and a set of specific super high resolution images of plants acquized by a moving gantry machine over an agriculture field. 
 
-As one can read in the paper, MegaStitch have different varieties and can be run with different configurations. The main entry point script to be used for stitching and geo-correction drone datasets is `Drone_GPS_Correction.py`. The command to run the code is:
+As one can read in the paper, MegaStitch have different varieties and can be run with different configurations. The main entry point script to be used for stitching and geo-correction of drone images with GPS information as well as other images captured with handheld cameras is `MegaStitch_Main.py`. This python script requires the following arguments:
 
-```
-python Drone_GPS_Correction.py 
-```
+* `-d / --data`: The path to the data directory. This directory should contain all the images. 
+
+* `-r / --result`: The path to the directory where the results will be saved. Different files and folders will be created in this folder.
+
+* `-g / --gcp`: The path to Ground Control Points (GCPs) json file. This file should have the same format as [this sample file](https://github.com/ariyanzri/MegaStitch/blob/main/GCP_sample.json).
+
+* `-s / --settings`: The path to the json file that contains the configuration/settings information. You can find a sample of this file [here](https://github.com/ariyanzri/MegaStitch/blob/main/sample_settings.json).
+
+In order to run the MGRAPH method, you should use `MGRAPH_Main.py` with the same arguments. 

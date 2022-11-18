@@ -50,7 +50,7 @@ def load_settings(settings_path):
 
 def get_args():
     parser = argparse.ArgumentParser(
-        description="MegaStitch Drone Stitching and Geo-correction script.",
+        description="MGRAPH Drone Stitching and Geo-correction script.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
@@ -132,75 +132,15 @@ def main():
 
     field = General_GPS_Correction.Field(sift_p=sift_path, tr_p=transformation_path)
 
-    if (
-        General_GPS_Correction.settings.transformation
-        == cv_util.Transformation.similarity
-    ):
-
-        (
-            coords_dict,
-            H,
-            H_inv,
-            abs_tr,
-            _,
-            _,
-            _,
-        ) = field.geo_correct_MegaStitchSimilarity(anchors_dict)
-    elif (
-        General_GPS_Correction.settings.transformation == cv_util.Transformation.affine
-    ):
-        (
-            coords_dict,
-            H,
-            H_inv,
-            abs_tr,
-            _,
-            _,
-        ) = field.geo_correct_MegaStitchAffine(anchors_dict, None)
-    elif (
-        General_GPS_Correction.settings.transformation
-        == cv_util.Transformation.homography
-    ):
-        if (
-            General_GPS_Correction.settings.preprocessing_transformation.lower()
-            == "none"
-        ):
-            (
-                coords_dict,
-                H,
-                H_inv,
-                abs_tr,
-                _,
-                _,
-            ) = field.geo_correct_BundleAdjustment_Homography(anchors_dict, None)
-        elif (
-            General_GPS_Correction.settings.preprocessing_transformation.lower()
-            == "similarity"
-        ):
-            (
-                coords_dict,
-                H,
-                H_inv,
-                abs_tr,
-                _,
-                _,
-            ) = field.geo_correct_MegaStitch_Similarity_Bundle_Adjustment_Homography(
-                anchors_dict, None
-            )
-        elif (
-            General_GPS_Correction.settings.preprocessing_transformation.lower()
-            == "affine"
-        ):
-            (
-                coords_dict,
-                H,
-                H_inv,
-                abs_tr,
-                _,
-                _,
-            ) = field.geo_correct_MegaStitch_Affine_Bundle_Adjustment_Homography(
-                anchors_dict, None
-            )
+    (
+        coords_dict,
+        H,
+        H_inv,
+        abs_tr,
+        _,
+        _,
+        _,
+    ) = field.geo_correct_MGRAPH(anchors_dict)
 
     if H is None:
         gcp_inf = None
