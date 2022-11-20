@@ -1,0 +1,1956 @@
+{
+    "GSE": [
+        {
+            "img_name": "eab6a02c-3716-49a1-9ebd-42c77f9ef00b_left.tif",
+            "img_x": 1358,
+            "img_y": 2384,
+            "gps_lon": -111.97497396330559,
+            "gps_lat": 33.07549522684967
+        },
+        {
+            "img_name": "06f1df0d-1c2d-4225-87d7-ff31c702e0e4_left.tif",
+            "img_x": 26,
+            "img_y": 1595,
+            "gps_lon": -111.97497384904607,
+            "gps_lat": 33.074630234935185
+        },
+        {
+            "img_name": "7d2fda2b-2c27-4a4f-ae8e-7861d264e1f5_left.tif",
+            "img_x": 517,
+            "img_y": 1139,
+            "gps_lon": -111.97487546914178,
+            "gps_lat": 33.075783095187816
+        },
+        {
+            "img_name": "60a33bcb-176a-45d7-9943-8a8250d6f231_left.tif",
+            "img_x": 223,
+            "img_y": 648,
+            "gps_lon": -111.97497450131398,
+            "gps_lat": 33.076359764347146
+        },
+        {
+            "img_name": "03e9e4bc-3a73-45b5-bb12-081f5a7dc85a_left.tif",
+            "img_x": 1547,
+            "img_y": 1994,
+            "gps_lon": -111.97487530828975,
+            "gps_lat": 33.07535087066245
+        },
+        {
+            "img_name": "687d6371-e041-44e3-9223-e1360aba7fe9_left.tif",
+            "img_x": 525,
+            "img_y": 902,
+            "gps_lon": -111.97487523347841,
+            "gps_lat": 33.075062420051275
+        },
+        {
+            "img_name": "34048b32-e340-491b-8ab2-f1e0551a4be1_left.tif",
+            "img_x": 775,
+            "img_y": 705,
+            "gps_lon": -111.97487551179012,
+            "gps_lat": 33.07635999716872
+        },
+        {
+            "img_name": "27667a94-3bd7-48bd-8048-ef6be8fc2fb1_left.tif",
+            "img_x": 249,
+            "img_y": 411,
+            "gps_lon": -111.97497437283774,
+            "gps_lat": 33.0756391786435
+        },
+        {
+            "img_name": "0f0ae9d0-f92d-4c0f-b361-9dab1bb957c0_left.tif",
+            "img_x": 1871,
+            "img_y": 1718,
+            "gps_lon": -111.97487491341144,
+            "gps_lat": 33.07592696432686
+        },
+        {
+            "img_name": "709ce80b-2bf1-4591-88ba-4b7edbf945ec_left.tif",
+            "img_x": 920,
+            "img_y": 1731,
+            "gps_lon": -111.97487491341144,
+            "gps_lat": 33.07592696432686
+        },
+        {
+            "img_name": "a61fed11-6d2d-4669-915d-b5c5174f8698_left.tif",
+            "img_x": 1389,
+            "img_y": 1577,
+            "gps_lon": -111.97497412167405,
+            "gps_lat": 33.07592718078734
+        },
+        {
+            "img_name": "9045229d-36bc-4880-9690-ad3e584b8540_left.tif",
+            "img_x": 1249,
+            "img_y": 635,
+            "gps_lon": -111.97497450131398,
+            "gps_lat": 33.076359764347146
+        },
+        {
+            "img_name": "93eb9685-c23a-4bd4-9ebb-deadf66282dc_left.tif",
+            "img_x": 806,
+            "img_y": 2108,
+            "gps_lon": -111.97487527775283,
+            "gps_lat": 33.07477505086456
+        },
+        {
+            "img_name": "1946b9c5-07da-4a8c-9706-0d0c178d4054_left.tif",
+            "img_x": 1113,
+            "img_y": 1012,
+            "gps_lon": -111.9749736040094,
+            "gps_lat": 33.07578313964815
+        },
+        {
+            "img_name": "a30b88d5-42dc-47f5-9d8d-d60985fd8b16_left.tif",
+            "img_x": 438,
+            "img_y": 144,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "2dbf9217-add3-4e88-a47c-2fe7f7975c84_left.tif",
+            "img_x": 468,
+            "img_y": 2213,
+            "gps_lon": -111.97487543689122,
+            "gps_lat": 33.07607154660364
+        },
+        {
+            "img_name": "c49d0e6f-b8a6-4667-ad9f-badd2435131a_left.tif",
+            "img_x": 578,
+            "img_y": 2717,
+            "gps_lon": -111.97487504435037,
+            "gps_lat": 33.074919007703436
+        },
+        {
+            "img_name": "bb02069f-91a4-4e96-a364-5fb3dfa021c8_left.tif",
+            "img_x": 806,
+            "img_y": 179,
+            "gps_lon": -111.97487504435037,
+            "gps_lat": 33.074919007703436
+        },
+        {
+            "img_name": "4f328c68-ecf6-45dd-8e4e-f34b2c8cedfc_left.tif",
+            "img_x": 403,
+            "img_y": 52,
+            "gps_lon": -111.97497382099833,
+            "gps_lat": 33.074919047156115
+        },
+        {
+            "img_name": "74ed9c3a-2c03-4ba7-8d71-8efabf643d72_left.tif",
+            "img_x": 1503,
+            "img_y": 2748,
+            "gps_lon": -111.97487504435037,
+            "gps_lat": 33.074919007703436
+        },
+        {
+            "img_name": "900eda62-4473-49ed-96ac-a3125870c676_left.tif",
+            "img_x": 1709,
+            "img_y": 2673,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "a10ebb21-7085-4cd0-9d06-47e7e61973ec_left.tif",
+            "img_x": 1135,
+            "img_y": 2125,
+            "gps_lon": -111.97497346395953,
+            "gps_lat": 33.076071501706146
+        },
+        {
+            "img_name": "ad8c2d99-48e2-4ae3-8871-07e0088be1ca_left.tif",
+            "img_x": 153,
+            "img_y": 1845,
+            "gps_lon": -111.97497355079615,
+            "gps_lat": 33.07535100448376
+        },
+        {
+            "img_name": "148dd013-bdd6-4510-9b72-005cac5e4318_left.tif",
+            "img_x": 1205,
+            "img_y": 35,
+            "gps_lon": -111.9749738784928,
+            "gps_lat": 33.076215904434704
+        },
+        {
+            "img_name": "b3352e46-2512-4f88-bb14-770980210578_left.tif",
+            "img_x": 670,
+            "img_y": 2677,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "f5034fa7-0ba5-436a-b9b3-5555feaa36d3_left.tif",
+            "img_x": 346,
+            "img_y": 2410,
+            "gps_lon": -111.97497396330559,
+            "gps_lat": 33.07549522684967
+        },
+        {
+            "img_name": "1cc3b284-e718-4ed6-961d-3363f9d020c6_left.tif",
+            "img_x": 1455,
+            "img_y": 2336,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "ec99b6ca-e38e-4cf7-b2f8-cf3c2fcb0975_left.tif",
+            "img_x": 1897,
+            "img_y": 162,
+            "gps_lon": -111.97487504435037,
+            "gps_lat": 33.074919007703436
+        },
+        {
+            "img_name": "00f135dc-50ac-442c-ba0c-f171bcadeee1_left.tif",
+            "img_x": 96,
+            "img_y": 889,
+            "gps_lon": -111.97497400730197,
+            "gps_lat": 33.07506218893205
+        },
+        {
+            "img_name": "91f55e8f-a64d-4b56-8df5-ec4b5fd8d0b6_left.tif",
+            "img_x": 425,
+            "img_y": 2309,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "b97168d1-9695-43b4-8a1e-89dbcaf84868_left.tif",
+            "img_x": 1161,
+            "img_y": 880,
+            "gps_lon": -111.97497400730197,
+            "gps_lat": 33.07506218893205
+        },
+        {
+            "img_name": "b014c1ea-622a-43c8-adf1-a51c0c69f34b_left.tif",
+            "img_x": 1428,
+            "img_y": 2577,
+            "gps_lon": -111.9749738784928,
+            "gps_lat": 33.076215904434704
+        },
+        {
+            "img_name": "c0faa572-3bd8-4ce8-a013-d645d1daf71a_left.tif",
+            "img_x": 153,
+            "img_y": 2230,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "1a8a41f6-1ab4-4cfe-b38c-7c732453a9f8_left.tif",
+            "img_x": 543,
+            "img_y": 2003,
+            "gps_lon": -111.97487530828975,
+            "gps_lat": 33.07535087066245
+        },
+        {
+            "img_name": "d1936bd8-b260-4a56-bcce-8b995a012958_left.tif",
+            "img_x": 1179,
+            "img_y": 1853,
+            "gps_lon": -111.97497355079615,
+            "gps_lat": 33.07535100448376
+        },
+        {
+            "img_name": "ad6d495b-0ab0-4a31-af1b-25367af6b75e_left.tif",
+            "img_x": 1941,
+            "img_y": 1411,
+            "gps_lon": -111.9748750030718,
+            "gps_lat": 33.07520664745237
+        },
+        {
+            "img_name": "6d0d51ac-4988-4301-ae64-28509d548227_left.tif",
+            "img_x": 1525,
+            "img_y": 1143,
+            "gps_lon": -111.97487546914178,
+            "gps_lat": 33.075783095187816
+        },
+        {
+            "img_name": "f1397718-9f68-496b-b977-bbd0a4567b14_left.tif",
+            "img_x": 1463,
+            "img_y": 1323,
+            "gps_lon": -111.97497388815982,
+            "gps_lat": 33.07520677625109
+        },
+        {
+            "img_name": "b0d2db8f-f648-4b7f-b06a-10a26543b548_left.tif",
+            "img_x": 1073,
+            "img_y": 1612,
+            "gps_lon": -111.97497384904607,
+            "gps_lat": 33.074630234935185
+        },
+        {
+            "img_name": "d05c14e7-02b2-48f0-a6c0-b2274a8555e0_left.tif",
+            "img_x": 1450,
+            "img_y": 65,
+            "gps_lon": -111.97497382099833,
+            "gps_lat": 33.074919047156115
+        },
+        {
+            "img_name": "7a5e74a3-9103-4a8f-be51-d2afac8cfc0f_left.tif",
+            "img_x": 1797,
+            "img_y": 714,
+            "gps_lon": -111.97487551179012,
+            "gps_lat": 33.07635999716872
+        },
+        {
+            "img_name": "4842abda-77e6-4ae9-89f7-69aa63b1ac5b_left.tif",
+            "img_x": 1529,
+            "img_y": 2195,
+            "gps_lon": -111.97487543689122,
+            "gps_lat": 33.07607154660364
+        },
+        {
+            "img_name": "924bb9c1-e304-43e5-b108-76735e7d928a_left.tif",
+            "img_x": 372,
+            "img_y": 2585,
+            "gps_lon": -111.9749738784928,
+            "gps_lat": 33.076215904434704
+        },
+        {
+            "img_name": "535a6144-39e9-42bf-8021-8d6f4fcb6845_left.tif",
+            "img_x": 390,
+            "img_y": 2024,
+            "gps_lon": -111.97497373287045,
+            "gps_lat": 33.074775092832915
+        },
+        {
+            "img_name": "ca4aa1be-e111-45fb-a193-f4ff9c5ebe4a_left.tif",
+            "img_x": 135,
+            "img_y": 61,
+            "gps_lon": -111.9749738784928,
+            "gps_lat": 33.076215904434704
+        },
+        {
+            "img_name": "d2faa3fe-90e3-4366-a272-a6cb4ec88ac2_left.tif",
+            "img_x": 1805,
+            "img_y": 2498,
+            "gps_lon": -111.9748751850188,
+            "gps_lat": 33.07549509721944
+        },
+        {
+            "img_name": "0f8e2bab-c43b-4b11-83e3-567e47d21918_left.tif",
+            "img_x": 1450,
+            "img_y": 162,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "84bead39-8c5c-4e7a-ab9b-63248febb4d2_left.tif",
+            "img_x": 1279,
+            "img_y": 407,
+            "gps_lon": -111.97497437283774,
+            "gps_lat": 33.0756391786435
+        },
+        {
+            "img_name": "b484a161-a727-4f79-844a-aeed3da4627b_left.tif",
+            "img_x": 416,
+            "img_y": 1599,
+            "gps_lon": -111.97497412167405,
+            "gps_lat": 33.07592718078734
+        },
+        {
+            "img_name": "14a1c496-5699-4a31-bda3-a1ab7c30a6df_left.tif",
+            "img_x": 127,
+            "img_y": 1008,
+            "gps_lon": -111.9749736040094,
+            "gps_lat": 33.07578313964815
+        },
+        {
+            "img_name": "4f8e9b06-6e83-48ea-8f7a-29c3793c75cd_left.tif",
+            "img_x": 355,
+            "img_y": 1328,
+            "gps_lon": -111.97497388815982,
+            "gps_lat": 33.07520677625109
+        },
+        {
+            "img_name": "df4ad169-2c35-4f24-9221-5986a3a15cf8_left.tif",
+            "img_x": 1858,
+            "img_y": 508,
+            "gps_lon": -111.97487506075876,
+            "gps_lat": 33.075639233583544
+        },
+        {
+            "img_name": "19b0774f-6f19-45a4-ac80-0a94451266cc_left.tif",
+            "img_x": 1143,
+            "img_y": 2625,
+            "gps_lon": -111.97497382099833,
+            "gps_lat": 33.074919047156115
+        },
+        {
+            "img_name": "54dd4099-36b3-4cd4-a3f9-86234d14b596_left.tif",
+            "img_x": 1485,
+            "img_y": 933,
+            "gps_lon": -111.97487523347841,
+            "gps_lat": 33.075062420051275
+        },
+        {
+            "img_name": "18bef19f-d9ab-4e6f-af93-a4f54b940b00_left.tif",
+            "img_x": 52,
+            "img_y": 2629,
+            "gps_lon": -111.97497382099833,
+            "gps_lat": 33.074919047156115
+        },
+        {
+            "img_name": "615909e7-7a8f-43c3-bf82-b9d314042d5b_left.tif",
+            "img_x": 118,
+            "img_y": 2108,
+            "gps_lon": -111.97497346395953,
+            "gps_lat": 33.076071501706146
+        },
+        {
+            "img_name": "064a2bea-6898-473e-bdd1-f63942ec49f9_left.tif",
+            "img_x": 819,
+            "img_y": 495,
+            "gps_lon": -111.97487506075876,
+            "gps_lat": 33.075639233583544
+        },
+        {
+            "img_name": "d28b4aae-5b8f-486d-87e3-b570dbad0113_left.tif",
+            "img_x": 806,
+            "img_y": 2493,
+            "gps_lon": -111.9748751850188,
+            "gps_lat": 33.07549509721944
+        },
+        {
+            "img_name": "9fe61644-328e-43fd-a79f-afc807f69796_left.tif",
+            "img_x": 1840,
+            "img_y": 2108,
+            "gps_lon": -111.97487527775283,
+            "gps_lat": 33.07477505086456
+        },
+        {
+            "img_name": "89a5a447-652e-4615-9d04-6e62a8b5e1da_left.tif",
+            "img_x": 1122,
+            "img_y": 2217,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "55f7f25c-9498-44db-8ef3-a94ce33fd763_left.tif",
+            "img_x": 859,
+            "img_y": 1420,
+            "gps_lon": -111.9748750030718,
+            "gps_lat": 33.07520664745237
+        },
+        {
+            "img_name": "e94d7ad5-3af4-47e4-a339-741c984ac476_left.tif",
+            "img_x": 1433,
+            "img_y": 2007,
+            "gps_lon": -111.97497373287045,
+            "gps_lat": 33.074775092832915
+        }
+    ],
+    "GLE": [
+        {
+            "img_name": "328ac0b5-e5ba-4e80-9a5e-fdf03bb4c426_left.tif",
+            "img_x": 1731,
+            "img_y": 2910,
+            "gps_lon": -111.974898244819,
+            "gps_lat": 33.0750506954051
+        },
+        {
+            "img_name": "ab769581-d5e9-4b97-996a-965edf93ae84_left.tif",
+            "img_x": 1113,
+            "img_y": 1249,
+            "gps_lon": -111.974952619768,
+            "gps_lat": 33.0750463015677
+        },
+        {
+            "img_name": "56a33403-4eed-427b-877e-e32fd51067c1_left.tif",
+            "img_x": 845,
+            "img_y": 2555,
+            "gps_lon": -111.974842673971,
+            "gps_lat": 33.0750340825804
+        },
+        {
+            "img_name": "789a7e2e-282e-4580-b292-55f1456fbc70_left.tif",
+            "img_x": 1718,
+            "img_y": 280,
+            "gps_lon": -111.97489689805,
+            "gps_lat": 33.0754822101583
+        },
+        {
+            "img_name": "382d7ebe-542a-4ce8-b435-d777de80daed_left.tif",
+            "img_x": 504,
+            "img_y": 2932,
+            "gps_lon": -111.974842498642,
+            "gps_lat": 33.0754746981126
+        },
+        {
+            "img_name": "6c8b09cd-27a8-45ea-981a-33155929b704_left.tif",
+            "img_x": 1389,
+            "img_y": 1569,
+            "gps_lon": -111.974952692777,
+            "gps_lat": 33.0759561218393
+        },
+        {
+            "img_name": "ba3a6fda-3397-4b70-9e6b-8fcaca1e2ba8_left.tif",
+            "img_x": 859,
+            "img_y": 1332,
+            "gps_lon": -111.975006780404,
+            "gps_lat": 33.0754789156398
+        },
+        {
+            "img_name": "0a78e9fc-5f10-4a09-b404-0750f2eed16a_left.tif",
+            "img_x": 486,
+            "img_y": 2165,
+            "gps_lon": -111.974843892942,
+            "gps_lat": 33.0763878453073
+        },
+        {
+            "img_name": "90e51aec-6fc2-44d1-968c-2a3d88111e5f_left.tif",
+            "img_x": 1292,
+            "img_y": 1380,
+            "gps_lon": -111.974898240859,
+            "gps_lat": 33.0763809261711
+        },
+        {
+            "img_name": "a196277c-1619-4b56-853c-6c5746033f25_left.tif",
+            "img_x": 429,
+            "img_y": 2910,
+            "gps_lon": -111.974843990219,
+            "gps_lat": 33.0745997719148
+        },
+        {
+            "img_name": "78b82481-e0a0-4245-af68-edb13a68fd1b_left.tif",
+            "img_x": 166,
+            "img_y": 284,
+            "gps_lon": -111.97489689805,
+            "gps_lat": 33.0754822101583
+        },
+        {
+            "img_name": "c82a8e3b-309d-465c-a4e9-62a7e2977a13_left.tif",
+            "img_x": 1345,
+            "img_y": 552,
+            "gps_lon": -111.974898496887,
+            "gps_lat": 33.0745976320083
+        },
+        {
+            "img_name": "2000ef36-9a32-4967-8e61-9fe93ef02efe_left.tif",
+            "img_x": 1972,
+            "img_y": 2923,
+            "gps_lon": -111.974843990219,
+            "gps_lat": 33.0745997719148
+        },
+        {
+            "img_name": "610ce882-9d70-4e07-b97c-2b898b6c2b86_left.tif",
+            "img_x": 1963,
+            "img_y": 2888,
+            "gps_lon": -111.974842498642,
+            "gps_lat": 33.0754746981126
+        },
+        {
+            "img_name": "eb5e06e7-9397-4a9a-abb5-ad544cca70dd_left.tif",
+            "img_x": 1516,
+            "img_y": 1599,
+            "gps_lon": -111.974952432095,
+            "gps_lat": 33.0746213831943
+        },
+        {
+            "img_name": "08c84122-9b82-4ad1-8719-0b0fde1a5453_left.tif",
+            "img_x": 1227,
+            "img_y": 994,
+            "gps_lon": -111.975006871447,
+            "gps_lat": 33.0746228516618
+        },
+        {
+            "img_name": "3f02115d-4a6c-4dfd-8f2d-f1f1e4c93b48_left.tif",
+            "img_x": 2064,
+            "img_y": 2182,
+            "gps_lon": -111.974843892942,
+            "gps_lat": 33.0763878453073
+        },
+        {
+            "img_name": "342d2bf5-7f7e-4789-9e09-84fe29a56488_left.tif",
+            "img_x": 2441,
+            "img_y": 2528,
+            "gps_lon": -111.974842673971,
+            "gps_lat": 33.0750340825804
+        },
+        {
+            "img_name": "e7f3ce06-0551-494b-af27-d0bdbd895e72_left.tif",
+            "img_x": 2445,
+            "img_y": 87,
+            "gps_lon": -111.97484198702,
+            "gps_lat": 33.0759430970313
+        },
+        {
+            "img_name": "6c58996c-3a3c-4cbb-ab15-f7339ddc8d0e_left.tif",
+            "img_x": 1591,
+            "img_y": 4,
+            "gps_lon": -111.974843990219,
+            "gps_lat": 33.0745997719148
+        },
+        {
+            "img_name": "9de2d45e-530e-45fd-a2cf-aee03e20ae64_left.tif",
+            "img_x": 1393,
+            "img_y": 2007,
+            "gps_lon": -111.974951478558,
+            "gps_lat": 33.0754770029353
+        },
+        {
+            "img_name": "f286d2bd-f2e1-4daf-a244-97482bddc107_left.tif",
+            "img_x": 937,
+            "img_y": 56,
+            "gps_lon": -111.97484198702,
+            "gps_lat": 33.0759430970313
+        },
+        {
+            "img_name": "fa66a1ea-a8aa-4ded-afa5-82eb321cc418_left.tif",
+            "img_x": 1065,
+            "img_y": 1687,
+            "gps_lon": -111.974952866692,
+            "gps_lat": 33.0763797774688
+        },
+        {
+            "img_name": "75a72d1f-9d05-4a2d-aa76-e2b06155f1d1_left.tif",
+            "img_x": 175,
+            "img_y": 2919,
+            "gps_lon": -111.974898244819,
+            "gps_lat": 33.0750506954051
+        },
+        {
+            "img_name": "4d55d6fc-fb97-4f2f-be3d-3f2000d9a4c9_left.tif",
+            "img_x": 1621,
+            "img_y": 4,
+            "gps_lon": -111.97500541105,
+            "gps_lat": 33.0763938883721
+        },
+        {
+            "img_name": "efab528b-1569-4154-8102-2c4b894f5337_left.tif",
+            "img_x": 692,
+            "img_y": 929,
+            "gps_lon": -111.975006823185,
+            "gps_lat": 33.0759489337668
+        }
+    ],
+    "GLL": [
+        {
+            "img_name": "59d2c3cb-678f-4af6-9c99-e35d333902bf_left.tif",
+            "img_x": 153,
+            "img_y": 43,
+            "gps_lon": -111.97500541105,
+            "gps_lat": 33.0763938883721
+        },
+        {
+            "img_name": "720d2579-d0ef-4af6-89b0-e86656a97ecc_left.tif",
+            "img_x": 1292,
+            "img_y": 626,
+            "gps_lon": -111.974898496887,
+            "gps_lat": 33.0745976320083
+        },
+        {
+            "img_name": "ede7d5be-f616-4ecf-8059-6d4b04198fba_left.tif",
+            "img_x": 1157,
+            "img_y": 2883,
+            "gps_lon": -111.975006764875,
+            "gps_lat": 33.0750502076622
+        },
+        {
+            "img_name": "da6c426e-0a36-418f-a005-f63be2395e9c_left.tif",
+            "img_x": 2371,
+            "img_y": 2489,
+            "gps_lon": -111.974842673971,
+            "gps_lat": 33.0750340825804
+        },
+        {
+            "img_name": "08c99caf-aaf3-473b-a64b-0876b6752b78_left.tif",
+            "img_x": 1323,
+            "img_y": 8,
+            "gps_lon": -111.974898244819,
+            "gps_lat": 33.0750506954051
+        },
+        {
+            "img_name": "058fa48b-c4be-41f9-810c-08873d7c750c_left.tif",
+            "img_x": 885,
+            "img_y": 2520,
+            "gps_lon": -111.974842673971,
+            "gps_lat": 33.0750340825804
+        },
+        {
+            "img_name": "549fb2cb-1fe9-4468-8c78-4f1129f20ab8_left.tif",
+            "img_x": 1284,
+            "img_y": 21,
+            "gps_lon": -111.974842498642,
+            "gps_lat": 33.0754746981126
+        },
+        {
+            "img_name": "3271aca2-95fa-48a1-806b-0cbc0de4af05_left.tif",
+            "img_x": 341,
+            "img_y": 2862,
+            "gps_lon": -111.974898244819,
+            "gps_lat": 33.0750506954051
+        },
+        {
+            "img_name": "35477aec-2c81-4f71-801f-e81b900a346c_left.tif",
+            "img_x": 1503,
+            "img_y": 1599,
+            "gps_lon": -111.974952432095,
+            "gps_lat": 33.0746213831943
+        },
+        {
+            "img_name": "535b47de-624f-4ece-b909-a8be5abf6840_left.tif",
+            "img_x": 1634,
+            "img_y": 394,
+            "gps_lon": -111.97489689805,
+            "gps_lat": 33.0754822101583
+        },
+        {
+            "img_name": "168092c7-8181-4fdf-8532-a522a93c1eb3_left.tif",
+            "img_x": 1008,
+            "img_y": 1455,
+            "gps_lon": -111.974898240859,
+            "gps_lat": 33.0763809261711
+        },
+        {
+            "img_name": "c595e329-f0bb-4645-bbe0-e36031fbd217_left.tif",
+            "img_x": 1008,
+            "img_y": 157,
+            "gps_lon": -111.97484198702,
+            "gps_lat": 33.0759430970313
+        },
+        {
+            "img_name": "3def765c-4b1b-473d-864e-6ae8b37f8040_left.tif",
+            "img_x": 118,
+            "img_y": 398,
+            "gps_lon": -111.97489689805,
+            "gps_lat": 33.0754822101583
+        },
+        {
+            "img_name": "ad1ad559-e856-49cf-ab66-cfd1211c8dc3_left.tif",
+            "img_x": 8,
+            "img_y": 2038,
+            "gps_lon": -111.974951478558,
+            "gps_lat": 33.0754770029353
+        },
+        {
+            "img_name": "41711fcb-3f0b-41b9-acac-9fd84d555ea3_left.tif",
+            "img_x": 1928,
+            "img_y": 2191,
+            "gps_lon": -111.974843892942,
+            "gps_lat": 33.0763878453073
+        },
+        {
+            "img_name": "ca5e6ebb-7a25-4026-a998-51b40cb1d0e2_left.tif",
+            "img_x": 705,
+            "img_y": 1012,
+            "gps_lon": -111.975006823185,
+            "gps_lat": 33.0759489337668
+        },
+        {
+            "img_name": "c24fa965-8fcc-443e-803e-0805057bf05d_left.tif",
+            "img_x": 1617,
+            "img_y": 35,
+            "gps_lon": -111.97500541105,
+            "gps_lat": 33.0763938883721
+        },
+        {
+            "img_name": "71db7d49-3f88-4024-8065-81f4eedbe643_left.tif",
+            "img_x": 1122,
+            "img_y": 1056,
+            "gps_lon": -111.975006871447,
+            "gps_lat": 33.0746228516618
+        },
+        {
+            "img_name": "b1bb5716-881e-4a9a-aa8a-c246c806c43a_left.tif",
+            "img_x": 819,
+            "img_y": 1358,
+            "gps_lon": -111.975006780404,
+            "gps_lat": 33.0754789156398
+        },
+        {
+            "img_name": "be1c429a-00b8-4128-96c8-6e83b7cf79d0_left.tif",
+            "img_x": 1959,
+            "img_y": 2862,
+            "gps_lon": -111.974843990219,
+            "gps_lat": 33.0745997719148
+        },
+        {
+            "img_name": "31687768-db66-4635-b0bf-eeb90cca6363_left.tif",
+            "img_x": 451,
+            "img_y": 2875,
+            "gps_lon": -111.974843990219,
+            "gps_lat": 33.0745997719148
+        },
+        {
+            "img_name": "d59c04a1-769e-4cf4-aa7c-ca8f25ee0a54_left.tif",
+            "img_x": 61,
+            "img_y": 8,
+            "gps_lon": -111.974843990219,
+            "gps_lat": 33.0745997719148
+        },
+        {
+            "img_name": "a0c43e78-4d0f-44f2-a12d-382af17ec58b_left.tif",
+            "img_x": 1025,
+            "img_y": 1279,
+            "gps_lon": -111.974952619768,
+            "gps_lat": 33.0750463015677
+        },
+        {
+            "img_name": "0dbc7861-8864-488d-b93d-3ed5cba9c770_left.tif",
+            "img_x": 1884,
+            "img_y": 2888,
+            "gps_lon": -111.974842498642,
+            "gps_lat": 33.0754746981126
+        },
+        {
+            "img_name": "6fa78e1b-5017-45df-8293-4f03d0b5dcaf_left.tif",
+            "img_x": 1735,
+            "img_y": 2866,
+            "gps_lon": -111.974898244819,
+            "gps_lat": 33.0750506954051
+        },
+        {
+            "img_name": "36f3a878-10c1-4f96-a13d-eb586b32150e_left.tif",
+            "img_x": 1095,
+            "img_y": 1709,
+            "gps_lon": -111.974952866692,
+            "gps_lat": 33.0763797774688
+        },
+        {
+            "img_name": "c49d2237-991f-4a6a-bdba-d125dadaed92_left.tif",
+            "img_x": 175,
+            "img_y": 1056,
+            "gps_lon": -111.975006871447,
+            "gps_lat": 33.0746228516618
+        },
+        {
+            "img_name": "1cbac515-6cb7-4107-9a3c-df79d48d1128_left.tif",
+            "img_x": 1336,
+            "img_y": 1630,
+            "gps_lon": -111.974952692777,
+            "gps_lat": 33.0759561218393
+        },
+        {
+            "img_name": "462641b1-c9ff-4e9b-a11b-4266dcae0727_left.tif",
+            "img_x": 569,
+            "img_y": 2182,
+            "gps_lon": -111.974843892942,
+            "gps_lat": 33.0763878453073
+        },
+        {
+            "img_name": "992922ea-7208-4aa4-b272-60f6649baf8c_left.tif",
+            "img_x": 1249,
+            "img_y": 4,
+            "gps_lon": -111.974843990219,
+            "gps_lat": 33.0745997719148
+        },
+        {
+            "img_name": "86c18d3a-2719-470a-9ee3-473bf8c4ccfd_left.tif",
+            "img_x": 2336,
+            "img_y": 13,
+            "gps_lon": -111.974842498642,
+            "gps_lat": 33.0754746981126
+        },
+        {
+            "img_name": "7558c3ad-5469-41b9-9df1-1cd82438d268_left.tif",
+            "img_x": 797,
+            "img_y": 8,
+            "gps_lon": -111.975006764875,
+            "gps_lat": 33.0750502076622
+        },
+        {
+            "img_name": "8896db7e-8271-490a-a20c-8554d6c15a47_left.tif",
+            "img_x": 1463,
+            "img_y": 2055,
+            "gps_lon": -111.974951478558,
+            "gps_lat": 33.0754770029353
+        }
+    ],
+    "GSL": [
+        {
+            "img_name": "974dc55c-791d-4ad8-92cd-b01dccdad748_left.tif",
+            "img_x": 1389,
+            "img_y": 561,
+            "gps_lon": -111.9749738784928,
+            "gps_lat": 33.076215904434704
+        },
+        {
+            "img_name": "4adf49ca-f2f9-406a-8e96-3fa2b073b5ea_left.tif",
+            "img_x": 1091,
+            "img_y": 994,
+            "gps_lon": -111.97497450131398,
+            "gps_lat": 33.076359764347146
+        },
+        {
+            "img_name": "1ab8f107-a039-41f4-92e3-bab3f8b4901c_left.tif",
+            "img_x": 201,
+            "img_y": 622,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "6ac51385-f18a-4369-b499-c13d43a12d9e_left.tif",
+            "img_x": 1179,
+            "img_y": 298,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "daca1bc8-9fda-494d-8d72-6dbecd46334a_left.tif",
+            "img_x": 1669,
+            "img_y": 1152,
+            "gps_lon": -111.97487523347841,
+            "gps_lat": 33.075062420051275
+        },
+        {
+            "img_name": "a9856edd-0b84-4dcb-be8a-da1657452254_left.tif",
+            "img_x": 2138,
+            "img_y": 2919,
+            "gps_lon": -111.97487523347841,
+            "gps_lat": 33.075062420051275
+        },
+        {
+            "img_name": "1dbef219-6b8d-4bff-a29e-83f9cd70a513_left.tif",
+            "img_x": 863,
+            "img_y": 2121,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "91c151f8-d213-4d28-847d-7b1a3651d0cb_left.tif",
+            "img_x": 920,
+            "img_y": 2130,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "daba3c81-517e-48d1-b875-abe03764edc0_left.tif",
+            "img_x": 1647,
+            "img_y": 1288,
+            "gps_lon": -111.97487546914178,
+            "gps_lat": 33.075783095187816
+        },
+        {
+            "img_name": "1e2b0818-7aa5-4b03-bc58-0acd7660da96_left.tif",
+            "img_x": 2270,
+            "img_y": 2783,
+            "gps_lon": -111.97487551179012,
+            "gps_lat": 33.07635999716872
+        },
+        {
+            "img_name": "acc9c284-ec1d-45ca-8cff-29dddb89edab_left.tif",
+            "img_x": 731,
+            "img_y": 1029,
+            "gps_lon": -111.97487551179012,
+            "gps_lat": 33.07635999716872
+        },
+        {
+            "img_name": "62931bac-1d3a-4175-a68b-a92624a5d907_left.tif",
+            "img_x": 1424,
+            "img_y": 359,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "77cd8053-b943-4b4c-af51-a761ccacc92c_left.tif",
+            "img_x": 727,
+            "img_y": 363,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "e9b24e93-4deb-4d58-b62c-9366e570a6f6_left.tif",
+            "img_x": 1503,
+            "img_y": 1726,
+            "gps_lon": -111.97487491341144,
+            "gps_lat": 33.07592696432686
+        },
+        {
+            "img_name": "1d042bb2-d650-4a41-934f-39c7c8a0fb09_left.tif",
+            "img_x": 1643,
+            "img_y": 2642,
+            "gps_lon": -111.97487506075876,
+            "gps_lat": 33.075639233583544
+        },
+        {
+            "img_name": "53557a08-e092-4f9e-a17a-27e8c666fffa_left.tif",
+            "img_x": 657,
+            "img_y": 552,
+            "gps_lon": -111.9749738784928,
+            "gps_lat": 33.076215904434704
+        },
+        {
+            "img_name": "5d7ef545-8603-45bc-b758-10aab66c03b9_left.tif",
+            "img_x": 2165,
+            "img_y": 271,
+            "gps_lon": -111.97487543689122,
+            "gps_lat": 33.07607154660364
+        },
+        {
+            "img_name": "f44ee6b8-a18f-45ab-aebb-d803285e8cbb_left.tif",
+            "img_x": 1157,
+            "img_y": 1626,
+            "gps_lon": -111.97497412167405,
+            "gps_lat": 33.07592718078734
+        },
+        {
+            "img_name": "f9a4ef5b-6091-4d95-a6bb-efbe2a714968_left.tif",
+            "img_x": 661,
+            "img_y": 254,
+            "gps_lon": -111.97487543689122,
+            "gps_lat": 33.07607154660364
+        },
+        {
+            "img_name": "4f89e4be-0192-4337-97f7-37157a6e1980_left.tif",
+            "img_x": 35,
+            "img_y": 1021,
+            "gps_lon": -111.97487551179012,
+            "gps_lat": 33.07635999716872
+        },
+        {
+            "img_name": "1ef6bbb2-64b0-4786-9a21-2772de037e86_left.tif",
+            "img_x": 1766,
+            "img_y": 823,
+            "gps_lon": -111.97497437283774,
+            "gps_lat": 33.0756391786435
+        },
+        {
+            "img_name": "e89cd452-32e5-4024-8341-52b7fbdcede0_left.tif",
+            "img_x": 1788,
+            "img_y": 977,
+            "gps_lon": -111.97497450131398,
+            "gps_lat": 33.076359764347146
+        },
+        {
+            "img_name": "4eb6efeb-baf9-40df-9693-c965dbe38914_left.tif",
+            "img_x": 1691,
+            "img_y": 1906,
+            "gps_lon": -111.97487530828975,
+            "gps_lat": 33.07535087066245
+        },
+        {
+            "img_name": "62d67721-7912-46d3-baf3-376ad055cf51_left.tif",
+            "img_x": 210,
+            "img_y": 2038,
+            "gps_lon": -111.97487543689122,
+            "gps_lat": 33.07607154660364
+        },
+        {
+            "img_name": "a758a327-1395-4add-a564-cf6b1f7a4745_left.tif",
+            "img_x": 1814,
+            "img_y": 2173,
+            "gps_lon": -111.97497396330559,
+            "gps_lat": 33.07549522684967
+        },
+        {
+            "img_name": "1c15be10-037d-4855-a7ef-450cc4a7d025_left.tif",
+            "img_x": 385,
+            "img_y": 2191,
+            "gps_lon": -111.97497396330559,
+            "gps_lat": 33.07549522684967
+        },
+        {
+            "img_name": "c7dbf6f5-471d-4c6d-a562-249be03620bd_left.tif",
+            "img_x": 933,
+            "img_y": 2822,
+            "gps_lon": -111.97487551179012,
+            "gps_lat": 33.07635999716872
+        },
+        {
+            "img_name": "c51357f4-64ce-48ee-8934-4d3e26c92876_left.tif",
+            "img_x": 1630,
+            "img_y": 2121,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "906d92e9-3e7c-4b92-ac47-ce2f66cf2886_left.tif",
+            "img_x": 232,
+            "img_y": 1130,
+            "gps_lon": -111.97487523347841,
+            "gps_lat": 33.075062420051275
+        },
+        {
+            "img_name": "8a00f162-51ba-429e-9a5c-805e558b2dc9_left.tif",
+            "img_x": 1367,
+            "img_y": 1143,
+            "gps_lon": -111.97497400730197,
+            "gps_lat": 33.07506218893205
+        },
+        {
+            "img_name": "beb137fa-f502-472b-bb64-3da9792c198d_left.tif",
+            "img_x": 0,
+            "img_y": 254,
+            "gps_lon": -111.97487543689122,
+            "gps_lat": 33.07607154660364
+        },
+        {
+            "img_name": "50b47c6d-9cfc-4143-9d54-5f3ad64c3fa3_left.tif",
+            "img_x": 2081,
+            "img_y": 1222,
+            "gps_lon": -111.9749736040094,
+            "gps_lat": 33.07578313964815
+        },
+        {
+            "img_name": "c3912700-d123-4a67-a7a8-3554cbb2a697_left.tif",
+            "img_x": 1551,
+            "img_y": 626,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "2848b6bf-7f9e-4bd0-9dfb-c70abcef096e_left.tif",
+            "img_x": 2073,
+            "img_y": 2401,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "5e903ba9-d95b-4f71-9b3f-98b9f1090475_left.tif",
+            "img_x": 416,
+            "img_y": 1634,
+            "gps_lon": -111.97497412167405,
+            "gps_lat": 33.07592718078734
+        },
+        {
+            "img_name": "459e163c-a52c-4ccd-af1c-e5324b4acaa7_left.tif",
+            "img_x": 1073,
+            "img_y": 2195,
+            "gps_lon": -111.97497396330559,
+            "gps_lat": 33.07549522684967
+        },
+        {
+            "img_name": "7306a0ef-775c-4890-9899-8c2417f440da_left.tif",
+            "img_x": 1376,
+            "img_y": 1209,
+            "gps_lon": -111.9749736040094,
+            "gps_lat": 33.07578313964815
+        },
+        {
+            "img_name": "f5266c9d-dcd9-44a3-b2fb-4988fc5b646c_left.tif",
+            "img_x": 39,
+            "img_y": 2914,
+            "gps_lon": -111.97487523347841,
+            "gps_lat": 33.075062420051275
+        },
+        {
+            "img_name": "5e539391-0276-4dea-bbd3-40f39835b091_left.tif",
+            "img_x": 205,
+            "img_y": 1301,
+            "gps_lon": -111.97487546914178,
+            "gps_lat": 33.075783095187816
+        },
+        {
+            "img_name": "67f3f38c-e9e1-4141-9dac-7afd57d76088_left.tif",
+            "img_x": 657,
+            "img_y": 1135,
+            "gps_lon": -111.97497400730197,
+            "gps_lat": 33.07506218893205
+        },
+        {
+            "img_name": "dc615d47-787b-4180-83d7-841359162c6d_left.tif",
+            "img_x": 718,
+            "img_y": 350,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "79ec6940-2216-40c0-8a1b-a6d5ecb667b3_left.tif",
+            "img_x": 1591,
+            "img_y": 2143,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "3293ffc0-8bfc-4be9-9dc0-5e2add442490_left.tif",
+            "img_x": 61,
+            "img_y": 1485,
+            "gps_lon": -111.9748750030718,
+            "gps_lat": 33.07520664745237
+        },
+        {
+            "img_name": "1ad5b7c6-3696-45a0-b03f-ca01969adb39_left.tif",
+            "img_x": 499,
+            "img_y": 2980,
+            "gps_lon": -111.9749736040094,
+            "gps_lat": 33.07578313964815
+        },
+        {
+            "img_name": "e38a0db7-1003-4d55-bdd2-34945294838f_left.tif",
+            "img_x": 175,
+            "img_y": 2112,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "205be3d8-cc2d-444d-904e-9167b1cfb145_left.tif",
+            "img_x": 482,
+            "img_y": 210,
+            "gps_lon": -111.97497346395953,
+            "gps_lat": 33.076071501706146
+        },
+        {
+            "img_name": "95d0a028-f0b4-4343-8cc5-002223fca405_left.tif",
+            "img_x": 2121,
+            "img_y": 1797,
+            "gps_lon": -111.97497355079615,
+            "gps_lat": 33.07535100448376
+        },
+        {
+            "img_name": "34335b82-35b0-449d-ba6c-9bc0c30de39a_left.tif",
+            "img_x": 1477,
+            "img_y": 1468,
+            "gps_lon": -111.9748750030718,
+            "gps_lat": 33.07520664745237
+        },
+        {
+            "img_name": "58685181-301b-44e0-9fa8-c432917e12c7_left.tif",
+            "img_x": 933,
+            "img_y": 1297,
+            "gps_lon": -111.97487546914178,
+            "gps_lat": 33.075783095187816
+        },
+        {
+            "img_name": "b9b0ba82-cc72-4cf3-8003-0df17659f963_left.tif",
+            "img_x": 2033,
+            "img_y": 3059,
+            "gps_lon": -111.97487546914178,
+            "gps_lat": 33.075783095187816
+        },
+        {
+            "img_name": "edfa2d4f-6781-4cd1-9429-adf64bacb617_left.tif",
+            "img_x": 1262,
+            "img_y": 2748,
+            "gps_lon": -111.97497450131398,
+            "gps_lat": 33.076359764347146
+        },
+        {
+            "img_name": "d4bb19f9-3f5f-41dc-ab2f-01b67e58cd5f_left.tif",
+            "img_x": 1209,
+            "img_y": 223,
+            "gps_lon": -111.97497346395953,
+            "gps_lat": 33.076071501706146
+        },
+        {
+            "img_name": "ae90cb64-292f-4329-8bd6-2719b04d16cb_left.tif",
+            "img_x": 30,
+            "img_y": 355,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "3d7e9096-332a-4921-ac5a-bf3fcc2066e8_left.tif",
+            "img_x": 973,
+            "img_y": 490,
+            "gps_lon": -111.9748751850188,
+            "gps_lat": 33.07549509721944
+        },
+        {
+            "img_name": "853f9c03-7c29-402e-8468-bec0ab651ca9_left.tif",
+            "img_x": 1897,
+            "img_y": 284,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "028da4aa-b03d-4dcc-afff-b1f61a9f9453_left.tif",
+            "img_x": 1665,
+            "img_y": 3256,
+            "gps_lon": -111.9748750030718,
+            "gps_lat": 33.07520664745237
+        },
+        {
+            "img_name": "9108acab-2379-41da-b611-04d1071ee533_left.tif",
+            "img_x": 1306,
+            "img_y": 3186,
+            "gps_lon": -111.97497388815982,
+            "gps_lat": 33.07520677625109
+        },
+        {
+            "img_name": "0107aa2c-cee6-4059-a008-a7fd32c304ca_left.tif",
+            "img_x": 653,
+            "img_y": 1231,
+            "gps_lon": -111.9749736040094,
+            "gps_lat": 33.07578313964815
+        },
+        {
+            "img_name": "c558cedb-29cf-4ff8-97d7-dc7ac2a363b2_left.tif",
+            "img_x": 1880,
+            "img_y": 2897,
+            "gps_lon": -111.97497400730197,
+            "gps_lat": 33.07506218893205
+        },
+        {
+            "img_name": "7684e3cf-b97c-414b-9263-7626a6455bf3_left.tif",
+            "img_x": 2020,
+            "img_y": 2064,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "ce9d74bd-a3e2-4b71-96bd-2fb8df0e7a71_left.tif",
+            "img_x": 1617,
+            "img_y": 2016,
+            "gps_lon": -111.97487543689122,
+            "gps_lat": 33.07607154660364
+        },
+        {
+            "img_name": "8348778d-1d99-4f6d-82a9-d7e46f97dad4_left.tif",
+            "img_x": 78,
+            "img_y": 850,
+            "gps_lon": -111.97487506075876,
+            "gps_lat": 33.075639233583544
+        },
+        {
+            "img_name": "0467d5af-77b7-4da3-818a-ae5c1e2c99c5_left.tif",
+            "img_x": 1349,
+            "img_y": 2235,
+            "gps_lon": -111.9748751850188,
+            "gps_lat": 33.07549509721944
+        },
+        {
+            "img_name": "fbc724aa-0b5e-4e14-baa7-0b29198da5fa_left.tif",
+            "img_x": 1148,
+            "img_y": 2980,
+            "gps_lon": -111.9749736040094,
+            "gps_lat": 33.07578313964815
+        },
+        {
+            "img_name": "c4661d02-46c3-48d2-9092-561a6a2374d4_left.tif",
+            "img_x": 2362,
+            "img_y": 2647,
+            "gps_lon": -111.97487506075876,
+            "gps_lat": 33.075639233583544
+        },
+        {
+            "img_name": "d438196e-96e7-48df-acd2-2b3dd9c20d00_left.tif",
+            "img_x": 723,
+            "img_y": 863,
+            "gps_lon": -111.97487506075876,
+            "gps_lat": 33.075639233583544
+        },
+        {
+            "img_name": "bd49f94a-e1b1-422f-b4fc-434ac45ea9ce_left.tif",
+            "img_x": 1845,
+            "img_y": 1586,
+            "gps_lon": -111.97497412167405,
+            "gps_lat": 33.07592718078734
+        },
+        {
+            "img_name": "64d8d998-fa96-4e1a-a52c-646c21602382_left.tif",
+            "img_x": 1367,
+            "img_y": 363,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "41a53559-ba35-4ae8-b615-7f7622c8fa30_left.tif",
+            "img_x": 1420,
+            "img_y": 3046,
+            "gps_lon": -111.97487546914178,
+            "gps_lat": 33.075783095187816
+        },
+        {
+            "img_name": "d55aa0f0-339e-45c6-804d-5d3125fb4130_left.tif",
+            "img_x": 951,
+            "img_y": 1875,
+            "gps_lon": -111.97487530828975,
+            "gps_lat": 33.07535087066245
+        },
+        {
+            "img_name": "00cb2f55-3238-4e10-b642-0d9cb902075b_left.tif",
+            "img_x": 1906,
+            "img_y": 2967,
+            "gps_lon": -111.9749736040094,
+            "gps_lat": 33.07578313964815
+        },
+        {
+            "img_name": "bee52bbc-1bb8-497f-b240-1dc9f4de9ac7_left.tif",
+            "img_x": 867,
+            "img_y": 2029,
+            "gps_lon": -111.97487543689122,
+            "gps_lat": 33.07607154660364
+        },
+        {
+            "img_name": "d9c5105f-f0fc-41fc-b97f-7e00f5487ce7_left.tif",
+            "img_x": 1122,
+            "img_y": 2340,
+            "gps_lon": -111.9749738784928,
+            "gps_lat": 33.076215904434704
+        },
+        {
+            "img_name": "0a637e46-2ee5-4153-8fc4-9ef7549b8b83_left.tif",
+            "img_x": 1630,
+            "img_y": 2783,
+            "gps_lon": -111.97487551179012,
+            "gps_lat": 33.07635999716872
+        },
+        {
+            "img_name": "70cf5d7e-d9b7-4d7c-92f1-53e460191c70_left.tif",
+            "img_x": 683,
+            "img_y": 2244,
+            "gps_lon": -111.9748751850188,
+            "gps_lat": 33.07549509721944
+        },
+        {
+            "img_name": "528b262d-07b4-4c5c-8960-edb279fb6db4_left.tif",
+            "img_x": 1143,
+            "img_y": 2923,
+            "gps_lon": -111.97497400730197,
+            "gps_lat": 33.07506218893205
+        },
+        {
+            "img_name": "4a3af995-6929-4248-9240-9cca78052140_left.tif",
+            "img_x": 1490,
+            "img_y": 92,
+            "gps_lon": -111.97487530828975,
+            "gps_lat": 33.07535087066245
+        },
+        {
+            "img_name": "fea62eae-e93d-4394-9fd7-40ef212735a6_left.tif",
+            "img_x": 635,
+            "img_y": 1981,
+            "gps_lon": -111.97497346395953,
+            "gps_lat": 33.076071501706146
+        },
+        {
+            "img_name": "a9196509-65b4-44b7-b307-137a11db070b_left.tif",
+            "img_x": 8,
+            "img_y": 2248,
+            "gps_lon": -111.9748751850188,
+            "gps_lat": 33.07549509721944
+        },
+        {
+            "img_name": "783a129e-3822-4e47-98e3-5cb6b52b925f_left.tif",
+            "img_x": 241,
+            "img_y": 2647,
+            "gps_lon": -111.97487506075876,
+            "gps_lat": 33.075639233583544
+        },
+        {
+            "img_name": "cc9bd7f1-8cc7-43d0-b912-0307856d456b_left.tif",
+            "img_x": 534,
+            "img_y": 2730,
+            "gps_lon": -111.97497450131398,
+            "gps_lat": 33.076359764347146
+        },
+        {
+            "img_name": "971484af-444c-4891-b243-b6973ec7af50_left.tif",
+            "img_x": 753,
+            "img_y": 1788,
+            "gps_lon": -111.97497355079615,
+            "gps_lat": 33.07535100448376
+        },
+        {
+            "img_name": "b3967572-84de-47bb-aea7-aa854bdf6e8d_left.tif",
+            "img_x": 2283,
+            "img_y": 2134,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "8f50275b-53b1-4c89-9bcc-5bdf1267c1ac_left.tif",
+            "img_x": 701,
+            "img_y": 2919,
+            "gps_lon": -111.97487523347841,
+            "gps_lat": 33.075062420051275
+        },
+        {
+            "img_name": "489e2aba-98be-4035-bf65-3374f1c4075b_left.tif",
+            "img_x": 617,
+            "img_y": 363,
+            "gps_lon": -111.97497396330559,
+            "gps_lat": 33.07549522684967
+        },
+        {
+            "img_name": "9aac74e4-d80e-41a2-aa50-4e94a131fe30_left.tif",
+            "img_x": 1875,
+            "img_y": 298,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "24095c9b-e1ae-46c5-a5b6-49c0a2513493_left.tif",
+            "img_x": 201,
+            "img_y": 2809,
+            "gps_lon": -111.97487551179012,
+            "gps_lat": 33.07635999716872
+        },
+        {
+            "img_name": "fc3efe0b-9157-4055-82af-1b56126ade88_left.tif",
+            "img_x": 254,
+            "img_y": 455,
+            "gps_lon": -111.9748751850188,
+            "gps_lat": 33.07549509721944
+        },
+        {
+            "img_name": "d20d05e8-0e3e-41fd-8be5-df107026ae24_left.tif",
+            "img_x": 201,
+            "img_y": 2125,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "edc0193e-5d38-4f69-8c59-c9e659de1757_left.tif",
+            "img_x": 13,
+            "img_y": 3068,
+            "gps_lon": -111.97487546914178,
+            "gps_lat": 33.075783095187816
+        },
+        {
+            "img_name": "46a393a7-8c7c-4517-8b75-86f0019f520e_left.tif",
+            "img_x": 447,
+            "img_y": 2331,
+            "gps_lon": -111.9749738784928,
+            "gps_lat": 33.076215904434704
+        },
+        {
+            "img_name": "4e4139eb-4cb8-4598-95cc-b4110101e9d0_left.tif",
+            "img_x": 455,
+            "img_y": 280,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "2fa47435-5934-40f4-b2e8-14e61ed3bc6d_left.tif",
+            "img_x": 788,
+            "img_y": 1490,
+            "gps_lon": -111.9748750030718,
+            "gps_lat": 33.07520664745237
+        },
+        {
+            "img_name": "3c8bac5f-9564-4465-9994-ec16ee97cf66_left.tif",
+            "img_x": 35,
+            "img_y": 368,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "9d95835e-dde7-47a2-b826-b3142a365258_left.tif",
+            "img_x": 2318,
+            "img_y": 1288,
+            "gps_lon": -111.97487546914178,
+            "gps_lat": 33.075783095187816
+        },
+        {
+            "img_name": "68c364b6-78b8-4664-b77e-8623b99d58ce_left.tif",
+            "img_x": 1424,
+            "img_y": 2940,
+            "gps_lon": -111.97487523347841,
+            "gps_lat": 33.075062420051275
+        },
+        {
+            "img_name": "34fadeca-3564-4877-9fe7-d1d3751471a9_left.tif",
+            "img_x": 648,
+            "img_y": 2051,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "1e505cb6-c7c4-429f-be1c-c9f91938c7bc_left.tif",
+            "img_x": 1411,
+            "img_y": 385,
+            "gps_lon": -111.97497396330559,
+            "gps_lat": 33.07549522684967
+        },
+        {
+            "img_name": "16bf1653-2d69-464f-b686-149f39f7d76e_left.tif",
+            "img_x": 2340,
+            "img_y": 477,
+            "gps_lon": -111.9748751850188,
+            "gps_lat": 33.07549509721944
+        },
+        {
+            "img_name": "17188490-3707-484e-b869-3fe4815727cc_left.tif",
+            "img_x": 1371,
+            "img_y": 1985,
+            "gps_lon": -111.97497346395953,
+            "gps_lat": 33.076071501706146
+        },
+        {
+            "img_name": "965d70bb-67dc-4c64-be69-b12a4714117b_left.tif",
+            "img_x": 1393,
+            "img_y": 1792,
+            "gps_lon": -111.97497355079615,
+            "gps_lat": 33.07535100448376
+        },
+        {
+            "img_name": "c1ea51fd-df15-479d-9ca3-415faec2c4ab_left.tif",
+            "img_x": 499,
+            "img_y": 306,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "0ae03415-82ee-41b3-af63-19d785f79299_left.tif",
+            "img_x": 442,
+            "img_y": 1424,
+            "gps_lon": -111.97497388815982,
+            "gps_lat": 33.07520677625109
+        },
+        {
+            "img_name": "0604aa25-b92b-410e-9bae-ae084cbfbed9_left.tif",
+            "img_x": 83,
+            "img_y": 1722,
+            "gps_lon": -111.97487491341144,
+            "gps_lat": 33.07592696432686
+        },
+        {
+            "img_name": "2df00c97-8188-4349-ae06-d176642db6c7_left.tif",
+            "img_x": 2134,
+            "img_y": 372,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "88a0935f-39be-4dc5-85bf-11a066085b6d_left.tif",
+            "img_x": 2322,
+            "img_y": 3234,
+            "gps_lon": -111.9748750030718,
+            "gps_lat": 33.07520664745237
+        },
+        {
+            "img_name": "8f750f83-90d3-4332-a813-e3aadc47fea9_left.tif",
+            "img_x": 2327,
+            "img_y": 2024,
+            "gps_lon": -111.97487543689122,
+            "gps_lat": 33.07607154660364
+        },
+        {
+            "img_name": "630d862e-de87-4a32-806a-cfd3f392da34_left.tif",
+            "img_x": 968,
+            "img_y": 3230,
+            "gps_lon": -111.9748750030718,
+            "gps_lat": 33.07520664745237
+        },
+        {
+            "img_name": "db10c92a-bb51-47c1-ab11-9ad778671aa3_left.tif",
+            "img_x": 1262,
+            "img_y": 2607,
+            "gps_lon": -111.97497437283774,
+            "gps_lat": 33.0756391786435
+        },
+        {
+            "img_name": "bef4bb78-5f62-43e4-b3d8-414e219a4fc6_left.tif",
+            "img_x": 2173,
+            "img_y": 96,
+            "gps_lon": -111.97487530828975,
+            "gps_lat": 33.07535087066245
+        },
+        {
+            "img_name": "0378d401-16e2-4e9d-a854-578364399a9d_left.tif",
+            "img_x": 1665,
+            "img_y": 468,
+            "gps_lon": -111.9748751850188,
+            "gps_lat": 33.07549509721944
+        },
+        {
+            "img_name": "7a5e485b-5d90-4d3a-bd14-3326cc97951f_left.tif",
+            "img_x": 210,
+            "img_y": 3256,
+            "gps_lon": -111.9748750030718,
+            "gps_lat": 33.07520664745237
+        },
+        {
+            "img_name": "650bd9a1-afb8-4ff8-8679-db1ac095b201_left.tif",
+            "img_x": 1078,
+            "img_y": 793,
+            "gps_lon": -111.97497437283774,
+            "gps_lat": 33.0756391786435
+        },
+        {
+            "img_name": "4eb7ec05-7ea3-43e4-b9b2-95899c6dfdeb_left.tif",
+            "img_x": 35,
+            "img_y": 100,
+            "gps_lon": -111.97487530828975,
+            "gps_lat": 33.07535087066245
+        },
+        {
+            "img_name": "d9b44a6e-92b3-4329-bfa7-6a4b839fba53_left.tif",
+            "img_x": 1380,
+            "img_y": 2059,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "676f33f6-d3c0-4e6e-93fb-5929e595ea3b_left.tif",
+            "img_x": 477,
+            "img_y": 2892,
+            "gps_lon": -111.97497400730197,
+            "gps_lat": 33.07506218893205
+        },
+        {
+            "img_name": "92584e94-53fa-4fc1-bdf1-3680f3bafa7a_left.tif",
+            "img_x": 613,
+            "img_y": 3177,
+            "gps_lon": -111.97497388815982,
+            "gps_lat": 33.07520677625109
+        },
+        {
+            "img_name": "915734ac-06ba-455f-b351-7a2a7ae8e428_left.tif",
+            "img_x": 2095,
+            "img_y": 1143,
+            "gps_lon": -111.97497400730197,
+            "gps_lat": 33.07506218893205
+        },
+        {
+            "img_name": "27dbe518-6693-428e-aad1-05e0e44a9300_left.tif",
+            "img_x": 2327,
+            "img_y": 1884,
+            "gps_lon": -111.97487530828975,
+            "gps_lat": 33.07535087066245
+        },
+        {
+            "img_name": "43281305-3c3f-4aeb-8e9c-562ae8f12294_left.tif",
+            "img_x": 1170,
+            "img_y": 1424,
+            "gps_lon": -111.97497388815982,
+            "gps_lat": 33.07520677625109
+        },
+        {
+            "img_name": "ed053bf2-7869-4d61-8b68-925b6cd480be_left.tif",
+            "img_x": 929,
+            "img_y": 1157,
+            "gps_lon": -111.97487523347841,
+            "gps_lat": 33.075062420051275
+        },
+        {
+            "img_name": "1ced2fdc-01dc-44d7-a037-5b7652900952_left.tif",
+            "img_x": 2147,
+            "img_y": 2239,
+            "gps_lon": -111.9748751850188,
+            "gps_lat": 33.07549509721944
+        },
+        {
+            "img_name": "e60920c4-675d-4f86-8227-b0744d3239f1_left.tif",
+            "img_x": 2213,
+            "img_y": 1726,
+            "gps_lon": -111.97487491341144,
+            "gps_lat": 33.07592696432686
+        },
+        {
+            "img_name": "633061b1-269b-4921-936b-3b1cccad0100_left.tif",
+            "img_x": 1380,
+            "img_y": 258,
+            "gps_lon": -111.97487543689122,
+            "gps_lat": 33.07607154660364
+        },
+        {
+            "img_name": "070eeeee-dc83-484d-9c8e-ccabc38636df_left.tif",
+            "img_x": 2165,
+            "img_y": 859,
+            "gps_lon": -111.97487506075876,
+            "gps_lat": 33.075639233583544
+        },
+        {
+            "img_name": "7dbd7966-310c-4775-bb08-89f679a47bed_left.tif",
+            "img_x": 2011,
+            "img_y": 2577,
+            "gps_lon": -111.97497437283774,
+            "gps_lat": 33.0756391786435
+        },
+        {
+            "img_name": "8f9e0335-4b27-4165-997f-4525ea817730_left.tif",
+            "img_x": 2322,
+            "img_y": 1152,
+            "gps_lon": -111.97487523347841,
+            "gps_lat": 33.075062420051275
+        },
+        {
+            "img_name": "b7923c37-e88a-4e9b-9333-61ea07118cfd_left.tif",
+            "img_x": 2073,
+            "img_y": 582,
+            "gps_lon": -111.9749738784928,
+            "gps_lat": 33.076215904434704
+        },
+        {
+            "img_name": "7747bed0-7196-4e36-992f-489625ee328c_left.tif",
+            "img_x": 2270,
+            "img_y": 653,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "b03f51a6-271f-45be-8f63-b50ca8c4fd2c_left.tif",
+            "img_x": 679,
+            "img_y": 3054,
+            "gps_lon": -111.97487546914178,
+            "gps_lat": 33.075783095187816
+        },
+        {
+            "img_name": "deef4d6f-8681-4282-8b4a-beb0e0c4ba54_left.tif",
+            "img_x": 1157,
+            "img_y": 280,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "03ba1697-f2fb-4405-961f-800131160e5a_left.tif",
+            "img_x": 1371,
+            "img_y": 2051,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "da741e70-4f87-4675-bfc8-4bf006433548_left.tif",
+            "img_x": 2086,
+            "img_y": 2051,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "2d0900f1-d456-4f04-9f8b-105653ad79b2_left.tif",
+            "img_x": 2112,
+            "img_y": 1025,
+            "gps_lon": -111.97487551179012,
+            "gps_lat": 33.07635999716872
+        },
+        {
+            "img_name": "035172fe-b045-44b0-8cca-7c8194bcb98b_left.tif",
+            "img_x": 600,
+            "img_y": 2550,
+            "gps_lon": -111.97497437283774,
+            "gps_lat": 33.0756391786435
+        },
+        {
+            "img_name": "44b3c0c7-80d5-410c-a8cc-51d85bfe664b_left.tif",
+            "img_x": 2068,
+            "img_y": 1981,
+            "gps_lon": -111.97497346395953,
+            "gps_lat": 33.076071501706146
+        },
+        {
+            "img_name": "c1453ac5-3423-489e-8ecc-96ccfadc6a30_left.tif",
+            "img_x": 1477,
+            "img_y": 837,
+            "gps_lon": -111.97487506075876,
+            "gps_lat": 33.075639233583544
+        },
+        {
+            "img_name": "f2d138fc-de20-447f-9d79-93c6c658b5e9_left.tif",
+            "img_x": 2270,
+            "img_y": 2125,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "b34fe595-261d-4fb4-8f87-81d5b0b2604a_left.tif",
+            "img_x": 771,
+            "img_y": 1722,
+            "gps_lon": -111.97487491341144,
+            "gps_lat": 33.07592696432686
+        },
+        {
+            "img_name": "eab0a905-3850-49ab-b414-012938452ecf_left.tif",
+            "img_x": 232,
+            "img_y": 1889,
+            "gps_lon": -111.97487530828975,
+            "gps_lat": 33.07535087066245
+        },
+        {
+            "img_name": "20cffd19-ddeb-4096-b5c1-fc58ff3ee894_left.tif",
+            "img_x": 350,
+            "img_y": 990,
+            "gps_lon": -111.97497450131398,
+            "gps_lat": 33.076359764347146
+        },
+        {
+            "img_name": "a7fcc53a-3d37-4361-aeb5-c05fb03006e9_left.tif",
+            "img_x": 1354,
+            "img_y": 2388,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "a85c39f5-aee7-4d0d-8669-be55934af6e1_left.tif",
+            "img_x": 2103,
+            "img_y": 403,
+            "gps_lon": -111.97497396330559,
+            "gps_lat": 33.07549522684967
+        },
+        {
+            "img_name": "1999a464-75b5-4a07-bd2d-c2bc23bee5ed_left.tif",
+            "img_x": 1871,
+            "img_y": 1441,
+            "gps_lon": -111.97497388815982,
+            "gps_lat": 33.07520677625109
+        },
+        {
+            "img_name": "f6cb0b20-9dd4-4209-b81b-ad9953df94e6_left.tif",
+            "img_x": 1845,
+            "img_y": 2305,
+            "gps_lon": -111.9749738784928,
+            "gps_lat": 33.076215904434704
+        },
+        {
+            "img_name": "181e923b-1619-4e23-82b7-2a5129813265_left.tif",
+            "img_x": 631,
+            "img_y": 2397,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "77cc5ed4-f6e1-4ebb-ba57-23e086f8d5fd_left.tif",
+            "img_x": 898,
+            "img_y": 644,
+            "gps_lon": -111.97487584827978,
+            "gps_lat": 33.076215678766744
+        },
+        {
+            "img_name": "1bec49fe-7516-4f76-a925-a3a9b524f757_left.tif",
+            "img_x": 363,
+            "img_y": 788,
+            "gps_lon": -111.97497437283774,
+            "gps_lat": 33.0756391786435
+        },
+        {
+            "img_name": "f2ca3037-fb08-4766-885f-b39aa9fa4f4e_left.tif",
+            "img_x": 705,
+            "img_y": 87,
+            "gps_lon": -111.97487530828975,
+            "gps_lat": 33.07535087066245
+        },
+        {
+            "img_name": "5f0b983b-9e62-48f8-b819-7220026afdd1_left.tif",
+            "img_x": 2077,
+            "img_y": 372,
+            "gps_lon": -111.97487576806833,
+            "gps_lat": 33.07643179225987
+        },
+        {
+            "img_name": "6554856c-5007-467b-bd20-4094d7d52468_left.tif",
+            "img_x": 955,
+            "img_y": 2625,
+            "gps_lon": -111.97487506075876,
+            "gps_lat": 33.075639233583544
+        },
+        {
+            "img_name": "9fc08102-f14d-4d3c-a52e-5842430af3a9_left.tif",
+            "img_x": 696,
+            "img_y": 2086,
+            "gps_lon": -111.97497390365633,
+            "gps_lat": 33.076431836706625
+        },
+        {
+            "img_name": "d192da77-f78b-45e2-9061-5c948c05198b_left.tif",
+            "img_x": 2064,
+            "img_y": 3195,
+            "gps_lon": -111.97497388815982,
+            "gps_lat": 33.07520677625109
+        },
+        {
+            "img_name": "b7bd00df-257c-4399-b649-bd421d2e207d_left.tif",
+            "img_x": 1867,
+            "img_y": 219,
+            "gps_lon": -111.97497346395953,
+            "gps_lat": 33.076071501706146
+        },
+        {
+            "img_name": "2312e881-94ea-4866-9b71-101801546dd5_left.tif",
+            "img_x": 1433,
+            "img_y": 1034,
+            "gps_lon": -111.97487551179012,
+            "gps_lat": 33.07635999716872
+        },
+        {
+            "img_name": "4f6097af-06fc-49be-9b22-ffe98af94da8_left.tif",
+            "img_x": 2099,
+            "img_y": 1503,
+            "gps_lon": -111.9748750030718,
+            "gps_lat": 33.07520664745237
+        },
+        {
+            "img_name": "41cc1e78-3869-44d7-a25d-6f7d9aab3414_left.tif",
+            "img_x": 1972,
+            "img_y": 2770,
+            "gps_lon": -111.97497450131398,
+            "gps_lat": 33.076359764347146
+        }
+    ]
+}
