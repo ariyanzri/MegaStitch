@@ -17,6 +17,8 @@ from Customized_myltiprocessing import MyPool
 from GPSPhoto import gpsphoto
 
 
+settings = None
+
 class Configurations:
     def __init__(self, images_path):
         self.images_path = images_path

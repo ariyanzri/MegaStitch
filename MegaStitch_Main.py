@@ -1,11 +1,11 @@
-from numpy.lib.function_base import trapz
-import General_GPS_Correction
-import datetime
-import sys
-import os
-import json
-import computer_vision_utils as cv_util
 import argparse
+import datetime
+import json
+import os
+import sys
+
+import General_GPS_Correction
+import computer_vision_utils as cv_util
 
 
 def report_time(start, end):
@@ -18,7 +18,6 @@ def report_time(start, end):
 
 
 def get_anchors_from_json(path):
-
     with open(path, "r") as outfile:
         anchors_dict = json.load(outfile)
 
@@ -94,6 +93,7 @@ def get_args():
 
 
 def main():
+    # coords_dict, H, H_inv, abs_tr = {}, None, None, None
 
     args = get_args()
 
@@ -133,8 +133,8 @@ def main():
     field = General_GPS_Correction.Field(sift_p=sift_path, tr_p=transformation_path)
 
     if (
-        General_GPS_Correction.settings.transformation
-        == cv_util.Transformation.similarity
+            General_GPS_Correction.settings.transformation
+            == cv_util.Transformation.similarity
     ):
 
         (
@@ -147,7 +147,7 @@ def main():
             _,
         ) = field.geo_correct_MegaStitchSimilarity(anchors_dict)
     elif (
-        General_GPS_Correction.settings.transformation == cv_util.Transformation.affine
+            General_GPS_Correction.settings.transformation == cv_util.Transformation.affine
     ):
         (
             coords_dict,
@@ -158,12 +158,12 @@ def main():
             _,
         ) = field.geo_correct_MegaStitchAffine(anchors_dict, None)
     elif (
-        General_GPS_Correction.settings.transformation
-        == cv_util.Transformation.homography
+            General_GPS_Correction.settings.transformation
+            == cv_util.Transformation.homography
     ):
         if (
-            General_GPS_Correction.settings.preprocessing_transformation.lower()
-            == "none"
+                General_GPS_Correction.settings.preprocessing_transformation.lower()
+                == "none"
         ):
             (
                 coords_dict,
@@ -174,8 +174,8 @@ def main():
                 _,
             ) = field.geo_correct_BundleAdjustment_Homography(anchors_dict, None)
         elif (
-            General_GPS_Correction.settings.preprocessing_transformation.lower()
-            == "similarity"
+                General_GPS_Correction.settings.preprocessing_transformation.lower()
+                == "similarity"
         ):
             (
                 coords_dict,
@@ -188,8 +188,8 @@ def main():
                 anchors_dict, None
             )
         elif (
-            General_GPS_Correction.settings.preprocessing_transformation.lower()
-            == "affine"
+                General_GPS_Correction.settings.preprocessing_transformation.lower()
+                == "affine"
         ):
             (
                 coords_dict,
@@ -201,6 +201,16 @@ def main():
             ) = field.geo_correct_MegaStitch_Affine_Bundle_Adjustment_Homography(
                 anchors_dict, None
             )
+    else:
+        (
+            coords_dict,
+            H,
+            H_inv,
+            abs_tr,
+            _,
+            _,
+            _,
+        ) = field.geo_correct_MegaStitchSimilarity(anchors_dict)
 
     if H is None:
         gcp_inf = None
@@ -210,7 +220,7 @@ def main():
     field.generate_transformation_accuracy_histogram(
         coords_dict, plot_path.replace("initial_GPS", "transformation_plot")
     )
-    field.save_field_centers_visualization(plot_path)
+    # field.save_field_centers_visualization(plot_path) # DEBUG
 
     ortho = field.generate_field_ortho(coords_dict, gcp_info=gcp_inf)
 
@@ -225,4 +235,5 @@ def main():
     log_file.close()
 
 
-main()
+if __name__ == "__main__":
+    main()
