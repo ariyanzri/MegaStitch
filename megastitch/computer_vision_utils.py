@@ -1,12 +1,8 @@
 import numpy as np
-import os
-import glob
 import cv2
 import sys
 import math
-import RANSAC
-import random
-import colorsys
+from megastitch import RANSAC
 from enum import Enum
 from scipy.optimize import lsq_linear
 

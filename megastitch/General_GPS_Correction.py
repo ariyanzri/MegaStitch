@@ -6,66 +6,22 @@ import math
 import random
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
-import computer_vision_utils as cv_util
+from megastitch import computer_vision_utils as cv_util
 import multiprocessing
 import json
 import pickle
 import gc
-import ProjectionOptimization
-import utils_MGRAPH
-from Customized_myltiprocessing import MyPool
+from megastitch import ProjectionOptimization
+from megastitch import utils_MGRAPH
+from megastitch.Customized_myltiprocessing import MyPool
 from GPSPhoto import gpsphoto
 
-
-settings = None
-
-class Configurations:
-    def __init__(self, images_path):
-        self.images_path = images_path
-        tmp_list = os.listdir(images_path)
-        tmp = cv2.imread("{0}/{1}".format(images_path, tmp_list[0]))
-        self.scale = 0.2
-        self.image_size = tmp.shape
-        self.nearest_number = 4
-        self.use_gps_distance = True
-        self.transformation = cv_util.Transformation.similarity
-        self.cores_to_use = 2
-        self.discard_transformation_perc_inlier = 0.8
-        self.max_SIFT_points = 100000
-        self.use_perc_inliers_for_coef = False
-        self.use_iterative_methods = True
-        self.perc_inliers_formula = lambda n: n
-        self.use_ceres_MGRAPH = False
-        self.perc_crop = 0
-        self.discard_even_images = False
-        self.normalize_key_points = False
-        self.refine_transformations = False
-        self.use_homogenouse_coords = False
-        self.use_parallel_multiGroup = False
-        self.no_cores_multiGroup = 2
-        self.number_equation_to_pick_from_unique_tuples = 20
-        self.grid_w = 3
-        self.grid_h = 7
-        self.min_intersect = 1
-        self.draw_guided_colors = False
-        self.equalize_histogram = False
-        self.percentage_next_neighbor = 0.6
-        self.sub_set_choosing = False
-        self.N_perc = 0.1
-        self.E_perc = 0.4
-        self.parallel_stitch = True
-        self.max_no_inliers = 20
-        self.draw_GCPs = False
-        self.Dataset = ""
-        self.Method = ""
-        self.number_bins = 5
-        self.size_bins = 5
-        self.do_cross_validation = False
-        self.AllGCPRMSE = True
-        self.preprocessing_transformation = "none"
+from megastitch.config import Configuration
 
 
 def generate_SIFT_points(args):
+
+    max_SIFT_points = 100000  # FIXME : find a better way to set this value, should use the config value
 
     img = args[0]
     name = args[1]
@@ -81,7 +37,7 @@ def generate_SIFT_points(args):
         ):
 
             img.load_img(True)
-            kp, desc = cv_util.get_SIFT_points(img.img, None, settings.max_SIFT_points)
+            kp, desc = cv_util.get_SIFT_points(img.img, None, max_SIFT_points)
             pickalable_kp = [cv_util.keypoint_to_tuple_encode(p) for p in kp]
             img.delete_img()
 
@@ -113,7 +69,7 @@ def generate_SIFT_points(args):
     else:
 
         img.load_img(True)
-        kp, desc = cv_util.get_SIFT_points(img.img, None, settings.max_SIFT_points)
+        kp, desc = cv_util.get_SIFT_points(img.img, None, max_SIFT_points)
         pickalable_kp = [cv_util.keypoint_to_tuple_encode(p) for p in kp]
         img.delete_img()
 
@@ -175,6 +131,8 @@ def transformation_estimation_helper(args):
 
 def get_neighbor_helper(args):
 
+    nearest_number = 4 # FIXME: use the config value instead of this hardcoded one
+
     img_name = args[0]
     images_dict = args[1]
 
@@ -195,22 +153,27 @@ def get_neighbor_helper(args):
 
     neighbors += [
         (img_name, img_n.name, None, None)
-        for img_n, _ in sorted_list_all_neighbors[: settings.nearest_number]
+        for img_n, _ in sorted_list_all_neighbors[: nearest_number]
     ]
     neighbors += [
         (img_n.name, img_name, None, None)
-        for img_n, _ in sorted_list_all_neighbors[: settings.nearest_number]
+        for img_n, _ in sorted_list_all_neighbors[: nearest_number]
     ]
 
     return neighbors
 
 
 class Image:
-    def __init__(self, name, coords):
+    def __init__(self, name, coords=None, settings=None):
         self.name = name
 
+        if settings is None:
+            self.settings = Configuration()
+        else:
+            self.settings = settings
+
         if coords is None:
-            gps = gpsphoto.getGPSData("{0}/{1}".format(settings.images_path, name))
+            gps = gpsphoto.getGPSData("{0}/{1}".format(self.settings.images_path, name))
 
             if "Latitude" in gps:
                 self.lat = gps["Latitude"]
@@ -249,7 +212,7 @@ class Image:
             if abs(s1 - s2) == 1:
                 return 0
 
-        if settings.use_gps_distance:
+        if self.settings.use_gps_distance:
 
             return cv_util.get_gps_distance(self.lat, self.lon, img.lat, img.lon)
         else:
@@ -282,27 +245,27 @@ class Image:
             if self.img is not None:
                 return
 
-            tmp = cv2.imread("{0}/{1}".format(settings.images_path, self.name))
+            tmp = cv2.imread("{0}/{1}".format(self.settings.images_path, self.name))
             tmp = cv2.resize(
                 tmp,
                 (
-                    int(settings.scale * settings.image_size[1]),
-                    int(settings.scale * settings.image_size[0]),
+                    int(self.settings.scale * self.settings.image_size[1]),
+                    int(self.settings.scale * self.settings.image_size[0]),
                 ),
             )
 
-            if settings.equalize_histogram and for_sift:
+            if self.settings.equalize_histogram and for_sift:
                 tmp = cv_util.histogram_equalization(tmp)
 
-            tmp = self.crop(settings.perc_crop, tmp)
+            tmp = self.crop(self.settings.perc_crop, tmp)
 
             self.img = tmp
 
         else:
 
-            tmp = cv2.imread("{0}/{1}".format(settings.images_path, self.name))
+            tmp = cv2.imread("{0}/{1}".format(self.settings.images_path, self.name))
             tmp = cv2.resize(
-                tmp, (int(s * settings.image_size[1]), int(s * settings.image_size[0]))
+                tmp, (int(s * self.settings.image_size[1]), int(s * self.settings.image_size[0]))
             )
 
             self.img = tmp
@@ -316,7 +279,7 @@ class Image:
         self.kp = pickeled_kp
         self.desc = desc
 
-        if settings.normalize_key_points:
+        if self.settings.normalize_key_points:
             self.load_img()
             self.kp = cv_util.normalize_key_points(
                 self.kp, self.img.shape[1], self.img.shape[0], (self.lon, self.lat)
@@ -337,7 +300,12 @@ class Field:
     # ---------- Preprocessing and initialization ---------------
     # -----------------------------------------------------------
 
-    def __init__(self, coords=None, image_names=None, sift_p=None, tr_p=None):
+    def __init__(self, coords=None, image_names=None, sift_p=None, tr_p=None, settings=None):
+
+        if settings is None:
+            self.settings = Configuration()
+        else:
+            self.settings = settings
 
         self.images, self.images_dict = self.get_all_images(coords, image_names)
 
@@ -399,10 +367,10 @@ class Field:
             lat = img.lat
             lon = img.lon
 
-            if max_lat - lat > settings.N_perc * (max_lat - min_lat):
+            if max_lat - lat > self.settings.N_perc * (max_lat - min_lat):
                 continue
 
-            if max_lon - lon > settings.E_perc * (max_lon - min_lon):
+            if max_lon - lon > self.settings.E_perc * (max_lon - min_lon):
                 continue
 
             new_list_images.append(img)
@@ -415,7 +383,7 @@ class Field:
         list_images = []
         dict_images = {}
 
-        img_path_list = os.listdir(settings.images_path)
+        img_path_list = os.listdir(self.settings.images_path)
 
         for i in img_path_list:
 
@@ -425,11 +393,11 @@ class Field:
             if image_names is not None and i not in image_names:
                 continue
 
-            img = Image(i, coords)
+            img = Image(i, coords, settings=self.settings)
             list_images.append(img)
             dict_images[i] = img
 
-        if settings.sub_set_choosing and list_images[0].lat is not None:
+        if self.settings.sub_set_choosing and list_images[0].lat is not None:
             list_images, dict_images = self.select_sub_set(list_images)
 
         print(">>> Images loaded successfully.")
@@ -501,7 +469,7 @@ class Field:
         for img in self.images:
             args.append((img.name, self.images_dict))
 
-        processes = multiprocessing.Pool(settings.cores_to_use)
+        processes = multiprocessing.Pool(self.settings.cores_to_use)
         results = processes.map(get_neighbor_helper, args)
         processes.close()
 
@@ -550,7 +518,7 @@ class Field:
             else:
                 args.append((img, img.name, self.SIFT_path))
 
-        processes = multiprocessing.Pool(settings.cores_to_use)
+        processes = multiprocessing.Pool(self.settings.cores_to_use)
         results = processes.map(generate_SIFT_points, args)
         processes.close()
 
@@ -621,7 +589,7 @@ class Field:
                         img1.desc,
                         img2.kp,
                         img1.kp,
-                        settings.transformation,
+                        self.settings.transformation,
                     )
                     (
                         T_21,
@@ -634,14 +602,14 @@ class Field:
                         img2.desc,
                         img1.kp,
                         img2.kp,
-                        settings.transformation,
+                        self.settings.transformation,
                     )
 
                     if (
                         T_12 is None
                         or T_21 is None
-                        or perc_inliers_12 < settings.discard_transformation_perc_inlier
-                        or perc_inliers_21 < settings.discard_transformation_perc_inlier
+                        or perc_inliers_12 < self.settings.discard_transformation_perc_inlier
+                        or perc_inliers_21 < self.settings.discard_transformation_perc_inlier
                     ):
                         continue
 
@@ -745,8 +713,8 @@ class Field:
                     img.desc,
                     nkps,
                     kps,
-                    settings.transformation,
-                    settings.percentage_next_neighbor,
+                    self.settings.transformation,
+                    self.settings.percentage_next_neighbor,
                     c,
                     img_n.name,
                     img.name,
@@ -761,18 +729,18 @@ class Field:
         print(">>> Begining estimating transformation.")
         sys.stdout.flush()
 
-        if settings.transformation == cv_util.Transformation.translation:
+        if self.settings.transformation == cv_util.Transformation.translation:
             results = []
 
             for a in args:
                 results.append(transformation_estimation_helper(a))
 
-            processes = MyPool(settings.cores_to_use)
+            processes = MyPool(self.settings.cores_to_use)
             results = processes.map(transformation_estimation_helper, args)
             processes.close()
 
         else:
-            processes = multiprocessing.Pool(settings.cores_to_use)
+            processes = multiprocessing.Pool(self.settings.cores_to_use)
             results = processes.map(transformation_estimation_helper, args)
             processes.close()
 
@@ -792,11 +760,11 @@ class Field:
                 )
             )
 
-            if T is None or perc_inliers < settings.discard_transformation_perc_inlier:
+            if T is None or perc_inliers < self.settings.discard_transformation_perc_inlier:
                 continue
 
             bins = self.get_matches_bins_for_cross_validation(
-                matches, inliers, settings.number_bins, settings.size_bins
+                matches, inliers, self.settings.number_bins, self.settings.size_bins
             )
 
             num_inliers = sum([len(bins[a]) for a in bins])
@@ -819,7 +787,7 @@ class Field:
         print(">>> Pairwise transformations estimated successfully.")
         sys.stdout.flush()
 
-        if settings.refine_transformations:
+        if self.settings.refine_transformations:
             transformation_dict = self.refine_transformations(transformation_dict)
 
         self.pairwise_transformations = transformation_dict
@@ -869,7 +837,7 @@ class Field:
             )
 
             T = cv_util.estimate_base_transformations(
-                pts1, ptsr, settings.transformation
+                pts1, ptsr, self.settings.transformation
             )
 
             absolute_transformation[img] = T
@@ -982,24 +950,24 @@ class Field:
 
         for l in sim_GCP:
             H_t = absolute_transformations[l["img_name"]]
-            p = np.array([l["img_x"] * settings.scale, l["img_y"] * settings.scale, 1])
+            p = np.array([l["img_x"] * self.settings.scale, l["img_y"] * self.settings.scale, 1])
             p_new = np.matmul(H_t, p)
             p_new /= p_new[2]
 
             From_centers.append(p_new[:2])
             To_centers.append([l["true_lon"], l["true_lat"]])
 
-        if settings.transformation == cv_util.Transformation.affine:
+        if self.settings.transformation == cv_util.Transformation.affine:
             H = cv_util.get_Similarity_Affine(
                 np.array(From_centers), np.array(To_centers)
             )
 
-        if settings.transformation == cv_util.Transformation.similarity:
+        if self.settings.transformation == cv_util.Transformation.similarity:
             H = cv_util.get_Similarity_Affine(
                 np.array(From_centers), np.array(To_centers)
             )
 
-        if settings.transformation == cv_util.Transformation.homography:
+        if self.settings.transformation == cv_util.Transformation.homography:
             H, _ = cv2.findHomography(
                 np.array(From_centers),
                 np.array(To_centers),
@@ -1409,8 +1377,8 @@ class Field:
             if img_name not in self.images_dict:
                 continue
 
-            A_w = img["img_x"] * settings.scale
-            A_h = img["img_y"] * settings.scale
+            A_w = img["img_x"] * self.settings.scale
+            A_h = img["img_y"] * self.settings.scale
 
             new_lon = new_coords[img_name]["UL"][0] + A_w * GPS_IMG_Ratio[0]
             new_lat = c * new_coords[img_name]["UL"][1] - A_h * GPS_IMG_Ratio[1]
@@ -1439,14 +1407,14 @@ class Field:
 
         for l in transformation_list:
             H_t = absolute_homography_dict[l["img_name"]]
-            p = np.array([l["img_x"] * settings.scale, l["img_y"] * settings.scale, 1])
+            p = np.array([l["img_x"] * self.settings.scale, l["img_y"] * self.settings.scale, 1])
             p_new = np.matmul(H_t, p)
             p_new /= p_new[2]
 
             EXP_centers.append(p_new[:2])
             GT_centers.append([l["true_lon"], l["true_lat"]])
 
-        if settings.transformation == cv_util.Transformation.affine:
+        if self.settings.transformation == cv_util.Transformation.affine:
             H = cv_util.get_Similarity_Affine(
                 np.array(EXP_centers), np.array(GT_centers)
             )
@@ -1454,7 +1422,7 @@ class Field:
                 np.array(GT_centers), np.array(EXP_centers)
             )
 
-        if settings.transformation == cv_util.Transformation.similarity:
+        if self.settings.transformation == cv_util.Transformation.similarity:
             H = cv_util.get_Similarity_Affine(
                 np.array(EXP_centers), np.array(GT_centers)
             )
@@ -1462,7 +1430,7 @@ class Field:
                 np.array(GT_centers), np.array(EXP_centers)
             )
 
-        if settings.transformation == cv_util.Transformation.homography:
+        if self.settings.transformation == cv_util.Transformation.homography:
             H, _ = cv2.findHomography(
                 np.array(EXP_centers),
                 np.array(GT_centers),
@@ -1484,7 +1452,7 @@ class Field:
         for l in evaluation_list:
 
             H_t = absolute_homography_dict[l["img_name"]]
-            p = np.array([l["img_x"] * settings.scale, l["img_y"] * settings.scale, 1])
+            p = np.array([l["img_x"] * self.settings.scale, l["img_y"] * self.settings.scale, 1])
             p_new = np.matmul(H_t, p)
             p_new /= p_new[2]
 
@@ -1540,7 +1508,7 @@ class Field:
 
             all_GCP_coords[i] = {}
 
-            p_act = [a["img_x"] * settings.scale, a["img_y"] * settings.scale, 1]
+            p_act = [a["img_x"] * self.settings.scale, a["img_y"] * self.settings.scale, 1]
             new_p_act = np.matmul(absolute_transformations[a["img_name"]], p_act)
             new_p_act = new_p_act / new_p_act[2]
 
@@ -1668,7 +1636,7 @@ class Field:
             print(":: Skipping GCP error calculation. No GCPs provided.")
             return None, None, None, None, None
 
-        if settings.AllGCPRMSE:
+        if self.settings.AllGCPRMSE:
             return self.report_GCP_error_all_GCPs(
                 absolute_homography_dict, anchors_dict
             )
@@ -1836,9 +1804,9 @@ class Field:
             self.image_name_to_index_dict,
             self.get_positions(),
             self.reference_image,
-            settings.transformation,
-            settings.use_ceres_MGRAPH,
-            settings.max_no_inliers,
+            self.settings.transformation,
+            self.settings.use_ceres_MGRAPH,
+            self.settings.max_no_inliers,
         )
 
         absolute_transformations = mg.optimize()
@@ -1852,7 +1820,7 @@ class Field:
 
             image_coords_dict[img.name] = {}
 
-            if settings.normalize_key_points:
+            if self.settings.normalize_key_points:
                 corners = {
                     "UL": [-0.5, -0.5, 1],
                     "UR": [0.5, -0.5, 1],
@@ -1874,7 +1842,7 @@ class Field:
                 new_corner = np.matmul(H, corners[key])
                 new_corner = new_corner / new_corner[2]
 
-                if settings.normalize_key_points:
+                if self.settings.normalize_key_points:
 
                     image_coords_dict[img.name][key] = [
                         int(w * (new_corner[0]) + w / 2),
@@ -1926,14 +1894,14 @@ class Field:
         # cross validation
         # --------------------------------------------
 
-        if settings.do_cross_validation:
+        if self.settings.do_cross_validation:
 
             Proj_RMSE_list = []
             Proj_RMSE_Norm_list = []
             GCP_RMSE_list = []
             Time_list = []
 
-            for i in range(settings.number_bins):
+            for i in range(self.settings.number_bins):
 
                 print("========== Fold {0} ===========".format(i))
 
@@ -1944,7 +1912,7 @@ class Field:
                     x,
                     y,
                     self.reference_image.name,
-                    settings.max_no_inliers,
+                    self.settings.max_no_inliers,
                     i,
                 )
 
@@ -1996,7 +1964,7 @@ class Field:
 
         print("================== NO CROSS VALIDATION ==================")
 
-        settings.max_no_inliers = 20
+        self.settings.max_no_inliers = 20
 
         mega_stitch = ProjectionOptimization.ReprojectionMinimization(
             self.images,
@@ -2005,7 +1973,7 @@ class Field:
             x,
             y,
             self.reference_image.name,
-            settings.max_no_inliers,
+            self.settings.max_no_inliers,
             -1,
         )
 
@@ -2043,7 +2011,7 @@ class Field:
 
         print(">>> MEGASTITCH-Similarity finished successfully.")
 
-        if settings.do_cross_validation:
+        if self.settings.do_cross_validation:
             return (
                 image_coords_dict,
                 H,
@@ -2089,14 +2057,14 @@ class Field:
         # cross validation
         # --------------------------------------------
 
-        if settings.do_cross_validation:
+        if self.settings.do_cross_validation:
 
             Proj_RMSE_list = []
             Proj_RMSE_Norm_list = []
             GCP_RMSE_list = []
             Time_list = []
 
-            for i in range(settings.number_bins):
+            for i in range(self.settings.number_bins):
 
                 print("========== Fold {0} ===========".format(i))
 
@@ -2107,7 +2075,7 @@ class Field:
                     x,
                     y,
                     self.reference_image.name,
-                    settings.max_no_inliers,
+                    self.settings.max_no_inliers,
                     i,
                 )
 
@@ -2164,7 +2132,7 @@ class Field:
 
         print("================== NO CROSS VALIDATION ==================")
 
-        settings.max_no_inliers = 20
+        self.settings.max_no_inliers = 20
 
         mega_stitch = ProjectionOptimization.ReprojectionMinimization(
             self.images,
@@ -2173,7 +2141,7 @@ class Field:
             x,
             y,
             self.reference_image.name,
-            settings.max_no_inliers,
+            self.settings.max_no_inliers,
             -1,
         )
 
@@ -2216,7 +2184,7 @@ class Field:
 
         print(">>> MEGASTITCH-Affine finished successfully.")
 
-        if settings.do_cross_validation:
+        if self.settings.do_cross_validation:
             return (
                 image_coords_dict,
                 H,
@@ -2260,14 +2228,14 @@ class Field:
         # cross validation
         # --------------------------------------------
 
-        if settings.do_cross_validation:
+        if self.settings.do_cross_validation:
 
             Proj_RMSE_list = []
             Proj_RMSE_Norm_list = []
             GCP_RMSE_list = []
             Time_list = []
 
-            for i in range(settings.number_bins):
+            for i in range(self.settings.number_bins):
 
                 print("========== Fold {0} ===========".format(i))
 
@@ -2278,7 +2246,7 @@ class Field:
                     x,
                     y,
                     self.reference_image.name,
-                    settings.max_no_inliers,
+                    self.settings.max_no_inliers,
                     i,
                 )
 
@@ -2343,7 +2311,7 @@ class Field:
 
         print("================== NO CROSS VALIDATION ==================")
 
-        settings.max_no_inliers = 20
+        self.settings.max_no_inliers = 20
 
         mega_stitch = ProjectionOptimization.ReprojectionMinimization(
             self.images,
@@ -2352,7 +2320,7 @@ class Field:
             x,
             y,
             self.reference_image.name,
-            settings.max_no_inliers,
+            self.settings.max_no_inliers,
             -1,
         )
 
@@ -2407,7 +2375,7 @@ class Field:
 
         print(">>> BundleAdjustment-Homography finished successfully.")
 
-        if settings.do_cross_validation:
+        if self.settings.do_cross_validation:
             return (
                 image_coords_dict,
                 H,
@@ -2447,13 +2415,13 @@ class Field:
         x = self.reference_image.img.shape[1]
         y = self.reference_image.img.shape[0]
 
-        settings.transformation = cv_util.Transformation.affine
+        self.settings.transformation = cv_util.Transformation.affine
         tr = self.generate_neighbor_transformations()
 
         if not use_old_inliers:
-            settings.transformation = cv_util.Transformation.homography
+            self.settings.transformation = cv_util.Transformation.homography
             tr_h = self.generate_neighbor_transformations()
-            settings.transformation = cv_util.Transformation.affine
+            self.settings.transformation = cv_util.Transformation.affine
         else:
             tr_h = tr
 
@@ -2461,18 +2429,18 @@ class Field:
         # cross validation
         # --------------------------------------------
 
-        if settings.do_cross_validation:
+        if self.settings.do_cross_validation:
 
             Proj_RMSE_list = []
             Proj_RMSE_Norm_list = []
             GCP_RMSE_list = []
             Time_list = []
 
-            for i in range(settings.number_bins):
+            for i in range(self.settings.number_bins):
 
                 print("========== Fold {0} ===========".format(i))
 
-                settings.transformation = cv_util.Transformation.affine
+                self.settings.transformation = cv_util.Transformation.affine
                 mega_stitch_init = ProjectionOptimization.ReprojectionMinimization(
                     self.images,
                     tr,
@@ -2480,7 +2448,7 @@ class Field:
                     x,
                     y,
                     self.reference_image.name,
-                    settings.max_no_inliers,
+                    self.settings.max_no_inliers,
                     i,
                 )
                 (
@@ -2489,7 +2457,7 @@ class Field:
                     running_time_init,
                 ) = mega_stitch_init.MegaStitchSimilarityAffine(False)
 
-                settings.transformation = cv_util.Transformation.homography
+                self.settings.transformation = cv_util.Transformation.homography
                 mega_stitch = ProjectionOptimization.ReprojectionMinimization(
                     self.images,
                     tr_h,
@@ -2497,7 +2465,7 @@ class Field:
                     x,
                     y,
                     self.reference_image.name,
-                    settings.max_no_inliers,
+                    self.settings.max_no_inliers,
                     i,
                 )
                 (
@@ -2552,9 +2520,9 @@ class Field:
 
         print("================== NO CROSS VALIDATION ==================")
 
-        settings.max_no_inliers = 20
+        self.settings.max_no_inliers = 20
 
-        settings.transformation = cv_util.Transformation.affine
+        self.settings.transformation = cv_util.Transformation.affine
         mega_stitch_init = ProjectionOptimization.ReprojectionMinimization(
             self.images,
             tr,
@@ -2562,7 +2530,7 @@ class Field:
             x,
             y,
             self.reference_image.name,
-            settings.max_no_inliers,
+            self.settings.max_no_inliers,
             -1,
         )
         (
@@ -2571,7 +2539,7 @@ class Field:
             running_time_init,
         ) = mega_stitch_init.MegaStitchSimilarityAffine(False)
 
-        settings.transformation = cv_util.Transformation.homography
+        self.settings.transformation = cv_util.Transformation.homography
         mega_stitch = ProjectionOptimization.ReprojectionMinimization(
             self.images,
             tr_h,
@@ -2579,7 +2547,7 @@ class Field:
             x,
             y,
             self.reference_image.name,
-            settings.max_no_inliers,
+            self.settings.max_no_inliers,
             -1,
         )
         (
@@ -2621,7 +2589,7 @@ class Field:
 
         print(">>> BundleAdjustment-Homography finished successfully.")
 
-        if settings.do_cross_validation:
+        if self.settings.do_cross_validation:
             return (
                 image_coords_dict,
                 H,
@@ -2661,13 +2629,13 @@ class Field:
         x = self.reference_image.img.shape[1]
         y = self.reference_image.img.shape[0]
 
-        settings.transformation = cv_util.Transformation.similarity
+        self.settings.transformation = cv_util.Transformation.similarity
         tr = self.generate_neighbor_transformations()
 
         if not use_old_inliers:
-            settings.transformation = cv_util.Transformation.homography
+            self.settings.transformation = cv_util.Transformation.homography
             tr_h = self.generate_neighbor_transformations()
-            settings.transformation = cv_util.Transformation.similarity
+            self.settings.transformation = cv_util.Transformation.similarity
         else:
             tr_h = tr
 
@@ -2675,18 +2643,18 @@ class Field:
         # cross validation
         # --------------------------------------------
 
-        if settings.do_cross_validation:
+        if self.settings.do_cross_validation:
 
             Proj_RMSE_list = []
             Proj_RMSE_Norm_list = []
             GCP_RMSE_list = []
             Time_list = []
 
-            for i in range(settings.number_bins):
+            for i in range(self.settings.number_bins):
 
                 print("========== Fold {0} ===========".format(i))
 
-                settings.transformation = cv_util.Transformation.similarity
+                self.settings.transformation = cv_util.Transformation.similarity
                 mega_stitch_init = ProjectionOptimization.ReprojectionMinimization(
                     self.images,
                     tr,
@@ -2694,7 +2662,7 @@ class Field:
                     x,
                     y,
                     self.reference_image.name,
-                    settings.max_no_inliers,
+                    self.settings.max_no_inliers,
                     i,
                 )
                 (
@@ -2703,7 +2671,7 @@ class Field:
                     running_time_init,
                 ) = mega_stitch_init.MegaStitchSimilarityAffine(True)
 
-                settings.transformation = cv_util.Transformation.homography
+                self.settings.transformation = cv_util.Transformation.homography
                 mega_stitch = ProjectionOptimization.ReprojectionMinimization(
                     self.images,
                     tr_h,
@@ -2711,7 +2679,7 @@ class Field:
                     x,
                     y,
                     self.reference_image.name,
-                    settings.max_no_inliers,
+                    self.settings.max_no_inliers,
                     i,
                 )
                 (
@@ -2766,9 +2734,9 @@ class Field:
 
         print("================== NO CROSS VALIDATION ==================")
 
-        settings.max_no_inliers = 20
+        self.settings.max_no_inliers = 20
 
-        settings.transformation = cv_util.Transformation.similarity
+        self.settings.transformation = cv_util.Transformation.similarity
         mega_stitch_init = ProjectionOptimization.ReprojectionMinimization(
             self.images,
             tr,
@@ -2776,7 +2744,7 @@ class Field:
             x,
             y,
             self.reference_image.name,
-            settings.max_no_inliers,
+            self.settings.max_no_inliers,
             -1,
         )
         (
@@ -2785,7 +2753,7 @@ class Field:
             running_time_init,
         ) = mega_stitch_init.MegaStitchSimilarityAffine(True)
 
-        settings.transformation = cv_util.Transformation.homography
+        self.settings.transformation = cv_util.Transformation.homography
         mega_stitch = ProjectionOptimization.ReprojectionMinimization(
             self.images,
             tr_h,
@@ -2793,7 +2761,7 @@ class Field:
             x,
             y,
             self.reference_image.name,
-            settings.max_no_inliers,
+            self.settings.max_no_inliers,
             -1,
         )
         (
@@ -2834,7 +2802,7 @@ class Field:
 
         print(">>> BundleAdjustment-Homography finished successfully.")
 
-        if settings.do_cross_validation:
+        if self.settings.do_cross_validation:
             return (
                 image_coords_dict,
                 H,
@@ -2881,8 +2849,8 @@ class Field:
             x,
             y,
             self.reference_image.name,
-            settings.max_no_inliers,
-            settings.scale,
+            self.settings.max_no_inliers,
+            self.settings.scale,
         )
 
         new_coords = mega_stitch.MegaStitchTranslationKeyPointBased(
@@ -2914,8 +2882,8 @@ class Field:
             x,
             y,
             self.reference_image.name,
-            settings.max_no_inliers,
-            settings.scale,
+            self.settings.max_no_inliers,
+            self.settings.scale,
         )
 
         new_coords = mega_stitch.MegaStitchTranslationParameterBased(
@@ -3049,7 +3017,7 @@ class Field:
                 if perc_inliers is None:
                     c = "red"
                 else:
-                    if perc_inliers < settings.discard_transformation_perc_inlier:
+                    if perc_inliers < self.settings.discard_transformation_perc_inlier:
                         c = (0, 0, 0, 1)
                     else:
                         c = (perc_inliers, 0, 0, 1)
@@ -3070,7 +3038,7 @@ class Field:
                 if perc_inliers is None:
                     c = "red"
                 else:
-                    if perc_inliers < settings.discard_transformation_perc_inlier:
+                    if perc_inliers < self.settings.discard_transformation_perc_inlier:
                         c = (0, 0, 0, 1)
                     else:
                         c = (perc_inliers, 0, 0, 1)
@@ -3086,7 +3054,7 @@ class Field:
 
     def save_field_centers_visualization(self, save_path):
 
-        if settings.Dataset == "ODFN":
+        if self.settings.Dataset == "ODFN":
             return
 
         x = [im.lon for im in self.images]
@@ -3103,7 +3071,7 @@ class Field:
             if perc_inliers is None:
                 c = "red"
             else:
-                if perc_inliers < settings.discard_transformation_perc_inlier:
+                if perc_inliers < self.settings.discard_transformation_perc_inlier:
                     c = (0, 0, 0, 1)
                 else:
                     c = (perc_inliers, 0, 0, 1)
@@ -3217,7 +3185,7 @@ class Field:
         if s is not None:
             new_image_coords_dict = {}
 
-            c = s / (settings.scale)
+            c = s / (self.settings.scale)
 
             for img in image_coords_dict:
                 old_coord = image_coords_dict[img]
@@ -3232,8 +3200,8 @@ class Field:
             image_coords_dict = new_image_coords_dict
 
         if (
-            settings.Dataset == "GRG" and settings.Method == "BNDL-ADJ"
-        ) or settings.Dataset == "ODFN":
+            self.settings.Dataset == "GRG" and self.settings.Method == "BNDL-ADJ"
+        ) or self.settings.Dataset == "ODFN":
             print(":: Removing outlier images for this experiment.")
             image_coords_dict = self.remove_outlier_images(image_coords_dict, 0.02)
 
@@ -3252,7 +3220,7 @@ class Field:
 
         # -------------------------------
 
-        if settings.parallel_stitch:
+        if self.settings.parallel_stitch:
 
             args = []
 
@@ -3276,7 +3244,7 @@ class Field:
 
                 if img == self.reference_image:
 
-                    if settings.draw_guided_colors:
+                    if self.settings.draw_guided_colors:
                         img.img = cv2.rectangle(
                             img.img,
                             (0, 0),
@@ -3290,7 +3258,7 @@ class Field:
                 img.dsc = None
                 args.append((pts1, pts2, img, frame_size, s))
 
-            processes = multiprocessing.Pool(settings.cores_to_use)
+            processes = multiprocessing.Pool(self.settings.cores_to_use)
             results = processes.map(warp_estimate_helper, args)
             processes.close()
 
@@ -3321,7 +3289,7 @@ class Field:
 
                 if img == self.reference_image:
 
-                    if settings.draw_guided_colors:
+                    if self.settings.draw_guided_colors:
                         img.img = cv2.rectangle(
                             img.img,
                             (0, 0),
@@ -3344,7 +3312,7 @@ class Field:
 
         # -------------------------------
 
-        if settings.draw_guided_colors:
+        if self.settings.draw_guided_colors:
             cv2.circle(frame_image, (-min_x, -min_y), 5, (0, 255, 0), -1)
             cv2.line(
                 frame_image, (-min_x, -min_y), (-min_x + 50, -min_y), (0, 255, 0), 2
@@ -3398,12 +3366,12 @@ class Field:
                     2,
                 )
 
-        if settings.draw_GCPs and gcp_info is not None:
+        if self.settings.draw_GCPs and gcp_info is not None:
 
-            s1, s2 = cv_util.get_GCP_sizes(settings.Dataset, settings.Method)
+            s1, s2 = cv_util.get_GCP_sizes(self.settings.Dataset, self.settings.Method)
 
             if s is not None:
-                C = s / (settings.scale)
+                C = s / (self.settings.scale)
             else:
                 C = 1
 
@@ -3455,7 +3423,7 @@ class Field:
                     -1,
                 )
 
-                p = [a["img_x"] * settings.scale, a["img_y"] * settings.scale, 1]
+                p = [a["img_x"] * self.settings.scale, a["img_y"] * self.settings.scale, 1]
                 p_GPS = np.matmul(absolute_transformations[a["img_name"]], p)
                 p_GPS = p_GPS / p_GPS[2]
 
@@ -3490,7 +3458,7 @@ class Field:
         if s is not None:
             new_image_coords_dict = {}
 
-            c = s / (settings.scale)
+            c = s / (self.settings.scale)
 
             for img in image_coords_dict:
                 old_coord = image_coords_dict[img]
@@ -3504,7 +3472,7 @@ class Field:
 
             image_coords_dict = new_image_coords_dict
 
-        if settings.Dataset == "GRG" and settings.Method == "BNDL-ADJ":
+        if self.settings.Dataset == "GRG" and self.settings.Method == "BNDL-ADJ":
             print(":: Removing outlier images for this experiment.")
             image_coords_dict = self.remove_outlier_images(image_coords_dict)
 
@@ -3523,7 +3491,7 @@ class Field:
 
         # -------------------------------
 
-        if settings.parallel_stitch:
+        if self.settings.parallel_stitch:
 
             args = []
 
@@ -3547,7 +3515,7 @@ class Field:
 
                 if img == self.reference_image:
 
-                    if settings.draw_guided_colors:
+                    if self.settings.draw_guided_colors:
                         img.img = cv2.rectangle(
                             img.img,
                             (0, 0),
@@ -3561,7 +3529,7 @@ class Field:
                 img.dsc = None
                 args.append((pts1, pts2, img, frame_size, s))
 
-            processes = multiprocessing.Pool(settings.cores_to_use)
+            processes = multiprocessing.Pool(self.settings.cores_to_use)
             results = processes.map(warp_estimate_helper, args)
             processes.close()
 
@@ -3590,7 +3558,7 @@ class Field:
 
                 if img == self.reference_image:
 
-                    if settings.draw_guided_colors:
+                    if self.settings.draw_guided_colors:
                         img.img = cv2.rectangle(
                             img.img,
                             (0, 0),
@@ -3613,7 +3581,7 @@ class Field:
 
         # -------------------------------
 
-        if settings.draw_guided_colors:
+        if self.settings.draw_guided_colors:
             cv2.circle(frame_image, (-min_x, -min_y), 5, (0, 255, 0), -1)
             cv2.line(
                 frame_image, (-min_x, -min_y), (-min_x + 50, -min_y), (0, 255, 0), 2
@@ -3667,9 +3635,9 @@ class Field:
                     2,
                 )
 
-        if settings.draw_GCPs and gcp_info is not None:
+        if self.settings.draw_GCPs and gcp_info is not None:
 
-            if settings.Dataset == "DSEFN" or settings.Dataset == "DLLFN":
+            if self.settings.Dataset == "DSEFN" or self.settings.Dataset == "DLLFN":
                 s1 = 30
                 s2 = 40
             else:
@@ -3677,7 +3645,7 @@ class Field:
                 s2 = 15
 
             if s is not None:
-                C = s / (settings.scale)
+                C = s / (self.settings.scale)
             else:
                 C = 1
 
@@ -3834,7 +3802,7 @@ class Field:
                 min_y = img_coords["LR"][1]
 
         info = {
-            "scale": settings.scale,
+            "scale": self.settings.scale,
             "coords": corrected_coordinates,
             "min_x": min_x,
             "min_y": min_y,
@@ -3996,9 +3964,3 @@ class Field:
         plt.savefig(save_path)
         plt.clf()
         plt.close()
-
-
-def init_setting(image_path):
-    global settings
-
-    settings = Configurations(image_path)

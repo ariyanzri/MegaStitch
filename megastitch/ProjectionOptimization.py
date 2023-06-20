@@ -1,13 +1,8 @@
 import numpy as np
-import math
-import computer_vision_utils as cv_util
-import multiprocessing
-import random
 import sys
 import datetime
-from scipy.sparse.linalg import lsmr
 from scipy.optimize import lsq_linear
-from scipy.optimize import leastsq,least_squares
+from scipy.optimize import least_squares
 
 def report_time(start,end):
 	print(':: Optimization\n\tStart: {0}\n\tEnd: {1}\n\tTotal running time: {2}.'.format(start,end,end-start))

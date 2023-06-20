@@ -22,7 +22,16 @@ This README contains instructions on how to get the data that were used in the p
 You can also find all the datasets as well as the Ground Control Points (GCPs) for each of them at [this](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/MegaStitch/megastitch_data.tar) link. 
 
 ## Requirements and Installation
-<hr>
+
+You can install the package and its dependencies with this command:
+
+```bash
+pip intall -e .
+```
+
+We recommend to install this tool in a virtual environment.
+
+### Old instructions
 
 Currently, there are no installation scripts for this repo. In order to use MegaStitch, you need to make sure that you have all the required python packages and files, and based on your needs, you need to run one of the main entry points of the repo. You can find the list of packages we installed on our conda environment at [this text file](https://github.com/ariyanzri/MegaStitch/blob/main/requirements.txt). It is very important to install the same versions of some of these packages in order for the code to run.  
 

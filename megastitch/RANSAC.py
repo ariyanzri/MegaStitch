@@ -1,7 +1,7 @@
 import numpy as np
 import multiprocessing
 import sys
-from Customized_myltiprocessing import MyPool
+from megastitch.Customized_myltiprocessing import MyPool
 
 
 def Estimate_Translation_Base(train_point,query_point):

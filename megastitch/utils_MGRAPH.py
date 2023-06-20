@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import sys
 import subprocess
 import os
-import computer_vision_utils as cv_util
+from megastitch import computer_vision_utils as cv_util
 from scipy.optimize import leastsq
 
 # from non_linear_optimizer import Non_Linear_Reprojection_Method

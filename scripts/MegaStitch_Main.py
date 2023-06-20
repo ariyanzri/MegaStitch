@@ -1,50 +1,11 @@
 import argparse
 import datetime
-import json
 import os
 import sys
 
-import General_GPS_Correction
-import computer_vision_utils as cv_util
-
-
-def report_time(start, end):
-    print("-----------------------------------------------------------")
-    print(
-        "Start date time: {0}\nEnd date time: {1}\nTotal running time: {2}.".format(
-            start, end, end - start
-        )
-    )
-
-
-def get_anchors_from_json(path):
-    with open(path, "r") as outfile:
-        anchors_dict = json.load(outfile)
-
-    return anchors_dict
-
-
-def load_settings(settings_path):
-    with open(settings_path, "r") as f:
-        settings_dict = json.load(f)
-
-    General_GPS_Correction.settings.scale = settings_dict["scale"]
-    General_GPS_Correction.settings.nearest_number = settings_dict["nearest_number"]
-    General_GPS_Correction.settings.discard_transformation_perc_inlier = settings_dict[
-        "discard_transformation_perc_inlier"
-    ]
-    General_GPS_Correction.settings.transformation = getattr(
-        cv_util.Transformation, settings_dict["transformation"]
-    )
-    General_GPS_Correction.settings.percentage_next_neighbor = settings_dict[
-        "percentage_next_neighbor"
-    ]
-    General_GPS_Correction.settings.cores_to_use = settings_dict["cores_to_use"]
-    General_GPS_Correction.settings.draw_GCPs = settings_dict["draw_GCPs"]
-
-    General_GPS_Correction.settings.sub_set_choosing = settings_dict["sub_set_choosing"]
-    General_GPS_Correction.settings.N_perc = settings_dict["N_perc"]
-    General_GPS_Correction.settings.E_perc = settings_dict["E_perc"]
+from megastitch import computer_vision_utils as cv_util, General_GPS_Correction
+from megastitch.config import Configuration
+from megastitch.utils import report_time, get_anchors_from_json
 
 
 def get_args():
@@ -93,8 +54,6 @@ def get_args():
 
 
 def main():
-    # coords_dict, H, H_inv, abs_tr = {}, None, None, None
-
     args = get_args()
 
     if not os.path.exists(args.result):
@@ -110,14 +69,11 @@ def main():
     if not os.path.exists(sift_path):
         os.makedirs(sift_path)
 
-    General_GPS_Correction.init_setting(args.data)
-    General_GPS_Correction.settings.Dataset = os.path.basename(
-        os.path.normpath(args.data)
-    )
-
-    General_GPS_Correction.settings.AllGCPRMSE = True
-
-    load_settings(args.settings)
+    # Load the configuration
+    config = Configuration(args.data)
+    config.Dataset = os.path.basename(os.path.normpath(args.data))
+    config.AllGCPRMSE = True
+    config.load(args.settings)
 
     original = sys.stdout
     log_file = open(log_path, "w")
@@ -130,13 +86,9 @@ def main():
     else:
         anchors_dict = None
 
-    field = General_GPS_Correction.Field(sift_p=sift_path, tr_p=transformation_path)
+    field = General_GPS_Correction.Field(sift_p=sift_path, tr_p=transformation_path, settings=config)
 
-    if (
-            General_GPS_Correction.settings.transformation
-            == cv_util.Transformation.similarity
-    ):
-
+    if config.transformation == cv_util.Transformation.similarity:
         (
             coords_dict,
             H,
@@ -146,9 +98,7 @@ def main():
             _,
             _,
         ) = field.geo_correct_MegaStitchSimilarity(anchors_dict)
-    elif (
-            General_GPS_Correction.settings.transformation == cv_util.Transformation.affine
-    ):
+    elif (config.transformation == cv_util.Transformation.affine):
         (
             coords_dict,
             H,
@@ -157,14 +107,8 @@ def main():
             _,
             _,
         ) = field.geo_correct_MegaStitchAffine(anchors_dict, None)
-    elif (
-            General_GPS_Correction.settings.transformation
-            == cv_util.Transformation.homography
-    ):
-        if (
-                General_GPS_Correction.settings.preprocessing_transformation.lower()
-                == "none"
-        ):
+    elif (config.transformation == cv_util.Transformation.homography):
+        if (config.preprocessing_transformation.lower() == "none"):
             (
                 coords_dict,
                 H,
@@ -173,10 +117,7 @@ def main():
                 _,
                 _,
             ) = field.geo_correct_BundleAdjustment_Homography(anchors_dict, None)
-        elif (
-                General_GPS_Correction.settings.preprocessing_transformation.lower()
-                == "similarity"
-        ):
+        elif (config.preprocessing_transformation.lower() == "similarity"):
             (
                 coords_dict,
                 H,
@@ -187,10 +128,7 @@ def main():
             ) = field.geo_correct_MegaStitch_Similarity_Bundle_Adjustment_Homography(
                 anchors_dict, None
             )
-        elif (
-                General_GPS_Correction.settings.preprocessing_transformation.lower()
-                == "affine"
-        ):
+        elif (config.preprocessing_transformation.lower() == "affine"):
             (
                 coords_dict,
                 H,
