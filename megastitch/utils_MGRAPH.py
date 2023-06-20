@@ -1,11 +1,14 @@
-import numpy as np
-import networkx as nx
-import matplotlib.pyplot as plt
-import sys
-import subprocess
 import os
-from megastitch import computer_vision_utils as cv_util
+import subprocess
+import sys
+
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
 from scipy.optimize import leastsq
+
+from megastitch import computer_vision_utils as cv_util
+
 
 # from non_linear_optimizer import Non_Linear_Reprojection_Method
 
@@ -109,9 +112,9 @@ class Graph:
             for v in range(self.node_count):
 
                 if (
-                    self.edge_weight_matrix[u][v] > 0
-                    and mstSet[v] == False
-                    and keys[v] > self.edge_weight_matrix[u][v]
+                        self.edge_weight_matrix[u][v] > 0
+                        and mstSet[v] == False
+                        and keys[v] > self.edge_weight_matrix[u][v]
                 ):
                     keys[v] = self.edge_weight_matrix[u][v]
                     parents[v] = u
@@ -144,15 +147,15 @@ class Graph:
 
 class Ceres_CPP:
     def __init__(
-        self,
-        images,
-        images_dict,
-        image_name_to_index_dict,
-        image_index_to_name_dict,
-        pairwise_homography_dict,
-        absolute_homography_dict,
-        temp_path,
-        max_matches,
+            self,
+            images,
+            images_dict,
+            image_name_to_index_dict,
+            image_index_to_name_dict,
+            pairwise_homography_dict,
+            absolute_homography_dict,
+            temp_path,
+            max_matches,
     ):
 
         self.images = images
@@ -198,7 +201,6 @@ class Ceres_CPP:
                 file_content += "{0} {1} {2} ".format(i, j, matche_count)
 
                 for m in matches[:matche_count]:
-
                     kp1 = self.images_dict[img1].kp[m.trainIdx]
                     kp2 = self.images_dict[img2].kp[m.queryIdx]
 
@@ -254,14 +256,14 @@ class Ceres_CPP:
 
 class Non_Linear_Reprojection_Method:
     def __init__(
-        self,
-        image_absolute_H_dict,
-        image_pairwise_dict,
-        image_N_to_i_dict,
-        mx_matches,
-        images_dict,
-        transformation_type,
-        refname,
+            self,
+            image_absolute_H_dict,
+            image_pairwise_dict,
+            image_N_to_i_dict,
+            mx_matches,
+            images_dict,
+            transformation_type,
+            refname,
     ):
 
         self.absolute_H_dict = image_absolute_H_dict
@@ -273,7 +275,7 @@ class Non_Linear_Reprojection_Method:
         H_0 = np.zeros(9 * len(images_dict))
         for img_name in self.absolute_H_dict:
             i = self.image_name_to_index_dict[img_name]
-            H_0[i * 9 : i * 9 + 9] = self.absolute_H_dict[img_name].reshape(9)
+            H_0[i * 9: i * 9 + 9] = self.absolute_H_dict[img_name].reshape(9)
 
         self.H_0 = H_0
         self.total_absolute_H = len(self.H_0) / 9
@@ -287,9 +289,8 @@ class Non_Linear_Reprojection_Method:
         for img1_name in self.pairwise_H_dict:
 
             if img1_name == self.image_ref_name:
-
                 i = self.image_name_to_index_dict[img1_name]
-                H1_tmp = X[i * 9 : i * 9 + 9]
+                H1_tmp = X[i * 9: i * 9 + 9]
                 H1_tmp = H1_tmp.reshape(3, 3)
 
                 residuals.append(H1_tmp[0, 1])
@@ -311,8 +312,8 @@ class Non_Linear_Reprojection_Method:
                 i = self.image_name_to_index_dict[img1_name]
                 j = self.image_name_to_index_dict[img2_name]
 
-                H1_tmp = X[i * 9 : i * 9 + 9]
-                H2_tmp = X[j * 9 : j * 9 + 9]
+                H1_tmp = X[i * 9: i * 9 + 9]
+                H2_tmp = X[j * 9: j * 9 + 9]
 
                 H1_tmp = H1_tmp.reshape(3, 3)
                 H2_tmp = H2_tmp.reshape(3, 3)
@@ -435,7 +436,7 @@ class Non_Linear_Reprojection_Method:
 
         for image_name in self.absolute_H_dict:
             i = self.image_name_to_index_dict[image_name]
-            H = np.reshape(x[i * 9 : i * 9 + 9], (3, 3))
+            H = np.reshape(x[i * 9: i * 9 + 9], (3, 3))
             new_abs_homography_dict[image_name] = H
 
         resafter = np.mean(self.get_residuals(x))
@@ -451,15 +452,15 @@ class Non_Linear_Reprojection_Method:
 
 class MGRAPH:
     def __init__(
-        self,
-        images,
-        pairwise_homography_dict,
-        image_name_to_index_dict,
-        image_locations,
-        reference_image,
-        transformation_type,
-        use_ceres,
-        mx_nmb_in,
+            self,
+            images,
+            pairwise_homography_dict,
+            image_name_to_index_dict,
+            image_locations,
+            reference_image,
+            transformation_type,
+            use_ceres,
+            mx_nmb_in,
     ):
 
         self.images = images
@@ -492,8 +493,8 @@ class MGRAPH:
                 ][2]
 
                 if (
-                    neighbor_name in self.pairwise_homography_dict
-                    and img_name in self.pairwise_homography_dict[neighbor_name]
+                        neighbor_name in self.pairwise_homography_dict
+                        and img_name in self.pairwise_homography_dict[neighbor_name]
                 ):
                     if self.edge_matrix[j][i] > self.edge_matrix[i][j]:
                         self.edge_matrix[i][j] = self.edge_matrix[j][i]
@@ -543,7 +544,7 @@ class MGRAPH:
             u = queue_traverse.pop()
 
             for v, edge in enumerate(
-                self.MST.edge_weight_matrix[self.image_name_to_index_dict[u]]
+                    self.MST.edge_weight_matrix[self.image_name_to_index_dict[u]]
             ):
 
                 v_name = self.image_index_to_name_dict[v]
@@ -552,7 +553,6 @@ class MGRAPH:
                     continue
 
                 if edge != 0:
-
                     absolute_u = absolute_homography_dict[u]
                     H = np.matmul(
                         absolute_u, self.pairwise_homography_dict[u][v_name][0]
@@ -602,7 +602,6 @@ class MGRAPH:
 
 
 if __name__ == "__main__":
-
     g = Graph(None, None, None, None)
 
     g.draw_graph()

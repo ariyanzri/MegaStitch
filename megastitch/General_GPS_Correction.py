@@ -1,26 +1,26 @@
-import numpy as np
-import os
-import cv2
-import sys
-import math
-import random
-import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-from megastitch import computer_vision_utils as cv_util
-import multiprocessing
-import json
-import pickle
 import gc
-from megastitch import ProjectionOptimization
-from megastitch import utils_MGRAPH
-from megastitch.Customized_myltiprocessing import MyPool
+import json
+import math
+import multiprocessing
+import os
+import pickle
+import random
+import sys
+
+import cv2
+import matplotlib.cm as cm
+import matplotlib.pyplot as plt
+import numpy as np
 from GPSPhoto import gpsphoto
 
+from megastitch import ProjectionOptimization
+from megastitch import computer_vision_utils as cv_util
+from megastitch import utils_MGRAPH
+from megastitch.Customized_myltiprocessing import MyPool
 from megastitch.config import Configuration
 
 
 def generate_SIFT_points(args):
-
     max_SIFT_points = 100000  # FIXME : find a better way to set this value, should use the config value
 
     img = args[0]
@@ -31,9 +31,9 @@ def generate_SIFT_points(args):
         path_for_gantry = args[2]
 
         if not os.path.exists(
-            "{0}/{1}_SIFT.data".format(
-                path_for_gantry, name.replace(".JPG", "").replace(".tif", "")
-            )
+                "{0}/{1}_SIFT.data".format(
+                    path_for_gantry, name.replace(".JPG", "").replace(".tif", "")
+                )
         ):
 
             img.load_img(True)
@@ -79,7 +79,6 @@ def generate_SIFT_points(args):
 
 
 def warp_estimate_helper(args):
-
     pts1 = args[0]
     pts2 = args[1]
     img = args[2]
@@ -97,7 +96,6 @@ def warp_estimate_helper(args):
 
 
 def transformation_estimation_helper(args):
-
     img_n_desc = args[0]
     img_desc = args[1]
     img_n_kp = args[2]
@@ -130,8 +128,7 @@ def transformation_estimation_helper(args):
 
 
 def get_neighbor_helper(args):
-
-    nearest_number = 4 # FIXME: use the config value instead of this hardcoded one
+    nearest_number = 4  # FIXME: use the config value instead of this hardcoded one
 
     img_name = args[0]
     images_dict = args[1]
@@ -234,7 +231,7 @@ class Image:
         x = int(perc * tmp.shape[0] / 2)
         y = int(perc * tmp.shape[1] / 2)
 
-        tmp = tmp[x : w - x, y : h - y]
+        tmp = tmp[x: w - x, y: h - y]
 
         return tmp
 
@@ -552,14 +549,14 @@ class Field:
                     continue
 
                 if (
-                    img1.name in transformation_dict
-                    and img2.name in transformation_dict[img1.name]
-                    and img2.name in transformation_dict
-                    and img1.name in transformation_dict[img2.name]
-                    and not (
+                        img1.name in transformation_dict
+                        and img2.name in transformation_dict[img1.name]
+                        and img2.name in transformation_dict
+                        and img1.name in transformation_dict[img2.name]
+                        and not (
                         img1.name in new_transformation_dict
                         and img2.name in new_transformation_dict[img1.name]
-                    )
+                )
                 ):
 
                     matches_1_2 = transformation_dict[img1.name][img2.name][1]
@@ -606,10 +603,10 @@ class Field:
                     )
 
                     if (
-                        T_12 is None
-                        or T_21 is None
-                        or perc_inliers_12 < self.settings.discard_transformation_perc_inlier
-                        or perc_inliers_21 < self.settings.discard_transformation_perc_inlier
+                            T_12 is None
+                            or T_21 is None
+                            or perc_inliers_12 < self.settings.discard_transformation_perc_inlier
+                            or perc_inliers_21 < self.settings.discard_transformation_perc_inlier
                     ):
                         continue
 
@@ -635,7 +632,7 @@ class Field:
         return new_transformation_dict
 
     def get_matches_bins_for_cross_validation(
-        self, matches, inliers, number_bins, size_bins
+            self, matches, inliers, number_bins, size_bins
     ):
 
         bins = {}
@@ -666,7 +663,7 @@ class Field:
         sys.stdout.flush()
 
         if self.Transformation_path is not None and os.path.exists(
-            self.Transformation_path
+                self.Transformation_path
         ):
             with open(self.Transformation_path, "r") as f:
                 jsonified = json.load(f)
@@ -770,7 +767,6 @@ class Field:
             num_inliers = sum([len(bins[a]) for a in bins])
 
             if num_inliers < 25:
-
                 bins = None
 
             # if T multiplied by the corners of img1 (in img_1 system) gives the corners of img_n (in img_1 system)
@@ -814,7 +810,6 @@ class Field:
         )
 
         for img in self.images_dict:
-
             pts1 = np.float32(
                 [
                     [
@@ -874,43 +869,42 @@ class Field:
             initial_coord_dict[img.name] = [0, 0, 0, 0, 0, 0, 0, 0]
 
             initial_coord_dict[img.name][0] = (
-                img_ref_coords[0] - xdiff_dict[img.name] * img_w / 2
+                    img_ref_coords[0] - xdiff_dict[img.name] * img_w / 2
             )
             initial_coord_dict[img.name][4] = (
-                img_ref_coords[4] + ydiff_dict[img.name] * img_h / 2
+                    img_ref_coords[4] + ydiff_dict[img.name] * img_h / 2
             )
 
             initial_coord_dict[img.name][1] = (
-                img_ref_coords[1] - xdiff_dict[img.name] * img_w / 2
+                    img_ref_coords[1] - xdiff_dict[img.name] * img_w / 2
             )
             initial_coord_dict[img.name][5] = (
-                img_ref_coords[5] + ydiff_dict[img.name] * img_h / 2
+                    img_ref_coords[5] + ydiff_dict[img.name] * img_h / 2
             )
 
             initial_coord_dict[img.name][2] = (
-                img_ref_coords[2] - xdiff_dict[img.name] * img_w / 2
+                    img_ref_coords[2] - xdiff_dict[img.name] * img_w / 2
             )
             initial_coord_dict[img.name][6] = (
-                img_ref_coords[6] + ydiff_dict[img.name] * img_h / 2
+                    img_ref_coords[6] + ydiff_dict[img.name] * img_h / 2
             )
 
             initial_coord_dict[img.name][3] = (
-                img_ref_coords[3] - xdiff_dict[img.name] * img_w / 2
+                    img_ref_coords[3] - xdiff_dict[img.name] * img_w / 2
             )
             initial_coord_dict[img.name][7] = (
-                img_ref_coords[7] + ydiff_dict[img.name] * img_h / 2
+                    img_ref_coords[7] + ydiff_dict[img.name] * img_h / 2
             )
 
         return initial_coord_dict
 
     def get_coords_from_absolute_transformations(
-        self, transformations_dict, width, height
+            self, transformations_dict, width, height
     ):
 
         image_corners_dict = {}
 
         for img_name in self.images_dict:
-
             i = self.images_dict[img_name]
             H = transformations_dict[img_name]
 
@@ -979,13 +973,13 @@ class Field:
         return H
 
     def calculate_projection_error_sim_GCPs(
-        self,
-        anchors_dict,
-        coords,
-        absolute_transformations,
-        pairwise_transformations,
-        cross_validation_k,
-        sim_GCPs,
+            self,
+            anchors_dict,
+            coords,
+            absolute_transformations,
+            pairwise_transformations,
+            cross_validation_k,
+            sim_GCPs,
     ):
 
         list_proj_RMSE = []
@@ -1106,14 +1100,14 @@ class Field:
         return np.mean(list_proj_RMSE), np.mean(list_norm_proj_RMSE)
 
     def calculate_projection_error(
-        self,
-        anchors_dict,
-        coords,
-        absolute_transformations,
-        pairwise_transformations,
-        cross_validation_k,
-        H=None,
-        sim_GCPs=None,
+            self,
+            anchors_dict,
+            coords,
+            absolute_transformations,
+            pairwise_transformations,
+            cross_validation_k,
+            H=None,
+            sim_GCPs=None,
     ):
 
         if sim_GCPs is not None:
@@ -1313,17 +1307,17 @@ class Field:
             for image_2_name in pairwise_transformations[image_1_name]:
 
                 GPS_width_1 = (
-                    coords[image_1_name]["UR"][0] - coords[image_1_name]["UL"][0]
+                        coords[image_1_name]["UR"][0] - coords[image_1_name]["UL"][0]
                 )
                 GPS_height_1 = (
-                    coords[image_1_name]["UL"][1] - coords[image_1_name]["LL"][1]
+                        coords[image_1_name]["UL"][1] - coords[image_1_name]["LL"][1]
                 )
 
                 GPS_width_2 = (
-                    coords[image_2_name]["UR"][0] - coords[image_2_name]["UL"][0]
+                        coords[image_2_name]["UR"][0] - coords[image_2_name]["UL"][0]
                 )
                 GPS_height_2 = (
-                    coords[image_2_name]["UL"][1] - coords[image_2_name]["LL"][1]
+                        coords[image_2_name]["UL"][1] - coords[image_2_name]["LL"][1]
                 )
 
                 matches = pairwise_transformations[image_1_name][image_2_name][1]
@@ -1352,16 +1346,16 @@ class Field:
         return math.sqrt(np.mean(list_errors))
 
     def report_GCP_error_for_Gantry(
-        self, new_coords, old_coords, anchors_dict, x, y, is_kp=True
+            self, new_coords, old_coords, anchors_dict, x, y, is_kp=True
     ):
 
         GPS_Width = (
-            old_coords[self.reference_image.name]["UR"]["lon"]
-            - old_coords[self.reference_image.name]["UL"]["lon"]
+                old_coords[self.reference_image.name]["UR"]["lon"]
+                - old_coords[self.reference_image.name]["UL"]["lon"]
         )
         GPS_Height = (
-            old_coords[self.reference_image.name]["UL"]["lat"]
-            - old_coords[self.reference_image.name]["LL"]["lat"]
+                old_coords[self.reference_image.name]["UL"]["lat"]
+                - old_coords[self.reference_image.name]["LL"]["lat"]
         )
         GPS_IMG_Ratio = (GPS_Width / x, GPS_Height / y)
 
@@ -1397,7 +1391,7 @@ class Field:
         )
 
     def GCP_error_random_base(
-        self, transformation_list, evaluation_list, absolute_homography_dict
+            self, transformation_list, evaluation_list, absolute_homography_dict
     ):
 
         GPS_diffs = []
@@ -1486,7 +1480,7 @@ class Field:
 
                 diff_x = abs(p1[0] - p2[0])
                 diff_y = abs(p1[1] - p2[1])
-                diff = math.sqrt(diff_x**2 + diff_y**2)
+                diff = math.sqrt(diff_x ** 2 + diff_y ** 2)
 
                 if diff_x < 5e-5:
                     counter_x += 1
@@ -1530,7 +1524,7 @@ class Field:
         return all_GCP_coords
 
     def report_GCP_error_for_Drone_Sim_GCPs(
-        self, absolute_homography_dict, anchors_dict, sim_GCPs
+            self, absolute_homography_dict, anchors_dict, sim_GCPs
     ):
 
         list_RMSE = []
@@ -1630,7 +1624,7 @@ class Field:
         return H, H_inv, RMSE, None, None
 
     def report_GCP_error_for_Drone(
-        self, absolute_homography_dict, anchors_dict, sim_GCPs=None
+            self, absolute_homography_dict, anchors_dict, sim_GCPs=None
     ):
         if anchors_dict is None:
             print(":: Skipping GCP error calculation. No GCPs provided.")
@@ -1902,7 +1896,6 @@ class Field:
             Time_list = []
 
             for i in range(self.settings.number_bins):
-
                 print("========== Fold {0} ===========".format(i))
 
                 mega_stitch = ProjectionOptimization.ReprojectionMinimization(
@@ -2003,7 +1996,6 @@ class Field:
             image_coords_dict[img.name] = {}
 
             for key in new_coords[img.name]:
-
                 image_coords_dict[img.name][key] = [
                     int(new_coords[img.name][key][0]),
                     int(new_coords[img.name][key][1]),
@@ -2065,7 +2057,6 @@ class Field:
             Time_list = []
 
             for i in range(self.settings.number_bins):
-
                 print("========== Fold {0} ===========".format(i))
 
                 mega_stitch = ProjectionOptimization.ReprojectionMinimization(
@@ -2176,7 +2167,6 @@ class Field:
             image_coords_dict[img.name] = {}
 
             for key in new_coords[img.name]:
-
                 image_coords_dict[img.name][key] = [
                     int(new_coords[img.name][key][0]),
                     int(new_coords[img.name][key][1]),
@@ -2236,7 +2226,6 @@ class Field:
             Time_list = []
 
             for i in range(self.settings.number_bins):
-
                 print("========== Fold {0} ===========".format(i))
 
                 mega_stitch = ProjectionOptimization.ReprojectionMinimization(
@@ -2367,7 +2356,6 @@ class Field:
             image_coords_dict[img.name] = {}
 
             for key in new_coords[img.name]:
-
                 image_coords_dict[img.name][key] = [
                     int(new_coords[img.name][key][0]),
                     int(new_coords[img.name][key][1]),
@@ -2407,7 +2395,7 @@ class Field:
             )
 
     def geo_correct_MegaStitch_Affine_Bundle_Adjustment_Homography(
-        self, anchors_dict, sim_GCPs, use_old_inliers=False
+            self, anchors_dict, sim_GCPs, use_old_inliers=False
     ):
 
         self.reference_image.load_img()
@@ -2437,7 +2425,6 @@ class Field:
             Time_list = []
 
             for i in range(self.settings.number_bins):
-
                 print("========== Fold {0} ===========".format(i))
 
                 self.settings.transformation = cv_util.Transformation.affine
@@ -2581,7 +2568,6 @@ class Field:
             image_coords_dict[img.name] = {}
 
             for key in new_coords[img.name]:
-
                 image_coords_dict[img.name][key] = [
                     int(new_coords[img.name][key][0]),
                     int(new_coords[img.name][key][1]),
@@ -2621,7 +2607,7 @@ class Field:
             )
 
     def geo_correct_MegaStitch_Similarity_Bundle_Adjustment_Homography(
-        self, anchors_dict, sim_GCPs, use_old_inliers=False
+            self, anchors_dict, sim_GCPs, use_old_inliers=False
     ):
 
         self.reference_image.load_img()
@@ -2651,7 +2637,6 @@ class Field:
             Time_list = []
 
             for i in range(self.settings.number_bins):
-
                 print("========== Fold {0} ===========".format(i))
 
                 self.settings.transformation = cv_util.Transformation.similarity
@@ -2794,7 +2779,6 @@ class Field:
             image_coords_dict[img.name] = {}
 
             for key in new_coords[img.name]:
-
                 image_coords_dict[img.name][key] = [
                     int(new_coords[img.name][key][0]),
                     int(new_coords[img.name][key][1]),
@@ -2928,24 +2912,23 @@ class Field:
         for img_name in coord_dict:
             coord = coord_dict[img_name]
             if (
-                coord["UL"][0] < x_q1
-                or coord["UL"][0] > x_q3
-                or coord["UR"][0] < x_q1
-                or coord["UR"][0] > x_q3
-                or coord["LL"][0] < x_q1
-                or coord["LL"][0] > x_q3
-                or coord["LR"][0] < x_q1
-                or coord["LR"][0] > x_q3
-                or coord["UL"][1] < y_q1
-                or coord["UL"][1] > y_q3
-                or coord["UR"][1] < y_q1
-                or coord["UR"][1] > y_q3
-                or coord["LL"][1] < y_q1
-                or coord["LL"][1] > y_q3
-                or coord["LR"][1] < y_q1
-                or coord["LR"][1] > y_q3
+                    coord["UL"][0] < x_q1
+                    or coord["UL"][0] > x_q3
+                    or coord["UR"][0] < x_q1
+                    or coord["UR"][0] > x_q3
+                    or coord["LL"][0] < x_q1
+                    or coord["LL"][0] > x_q3
+                    or coord["LR"][0] < x_q1
+                    or coord["LR"][0] > x_q3
+                    or coord["UL"][1] < y_q1
+                    or coord["UL"][1] > y_q3
+                    or coord["UR"][1] < y_q1
+                    or coord["UR"][1] > y_q3
+                    or coord["LL"][1] < y_q1
+                    or coord["LL"][1] > y_q3
+                    or coord["LR"][1] < y_q1
+                    or coord["LR"][1] > y_q3
             ):
-
                 continue
 
             new_coords_dict[img_name] = coord
@@ -2973,7 +2956,7 @@ class Field:
         plt.close()
 
     def save_visualized_initial_coords(
-        self, initial_coord_dict, save_path, img_ref_index
+            self, initial_coord_dict, save_path, img_ref_index
     ):
         coords = np.array(
             [
@@ -3095,12 +3078,12 @@ class Field:
         h = self.reference_image.img.shape[0]
 
         w_GPS = (
-            gps_coords[self.reference_image.name]["UR"][0]
-            - gps_coords[self.reference_image.name]["UL"][0]
+                gps_coords[self.reference_image.name]["UR"][0]
+                - gps_coords[self.reference_image.name]["UL"][0]
         )
         h_GPS = (
-            gps_coords[self.reference_image.name]["LL"][1]
-            - gps_coords[self.reference_image.name]["UL"][1]
+                gps_coords[self.reference_image.name]["LL"][1]
+                - gps_coords[self.reference_image.name]["UL"][1]
         )
 
         w_ratio = w / w_GPS
@@ -3116,7 +3099,6 @@ class Field:
             image_coords_dict[img_name] = {}
 
             for k in ["UL", "UR", "LR", "LL"]:
-
                 image_coords_dict[img_name][k] = [
                     w_ratio * (coord[k][0] - min_x),
                     h_ratio * (coord[k][1] - min_y),
@@ -3173,11 +3155,10 @@ class Field:
         return min_x, max_x, min_y, max_y
 
     def generate_field_ortho(
-        self, image_coords_dict, s=None, orig_GPS=None, gcp_info=None
+            self, image_coords_dict, s=None, orig_GPS=None, gcp_info=None
     ):
 
         if orig_GPS is not None:
-
             image_coords_dict = self.convert_GPS_coords_to_image_coords(
                 image_coords_dict
             )
@@ -3200,7 +3181,7 @@ class Field:
             image_coords_dict = new_image_coords_dict
 
         if (
-            self.settings.Dataset == "GRG" and self.settings.Method == "BNDL-ADJ"
+                self.settings.Dataset == "GRG" and self.settings.Method == "BNDL-ADJ"
         ) or self.settings.Dataset == "ODFN":
             print(":: Removing outlier images for this experiment.")
             image_coords_dict = self.remove_outlier_images(image_coords_dict, 0.02)
@@ -3446,11 +3427,10 @@ class Field:
         return frame_image.astype("uint8")
 
     def generate_field_ortho_multiple_GCPs(
-        self, image_coords_dict, s=None, orig_GPS=None, gcp_info=None
+            self, image_coords_dict, s=None, orig_GPS=None, gcp_info=None
     ):
 
         if orig_GPS is not None:
-
             image_coords_dict = self.convert_GPS_coords_to_image_coords(
                 image_coords_dict
             )
@@ -3688,7 +3668,6 @@ class Field:
                 )
 
                 for p_GPS in all_GCPs[k]["gps"]:
-
                     cv2.circle(
                         frame_image,
                         (int((p_GPS[0] - min_x) * C), int((p_GPS[1] - min_y) * C)),
@@ -3737,7 +3716,6 @@ class Field:
             new_image_coordinates[img.name] = {}
 
             for k, key in enumerate(["UL", "UR", "LR", "LL"]):
-
                 p = [coord[key][0], coord[key][1], 1]
                 new_p = np.matmul(H, p)
                 new_p = new_p / new_p[2]
@@ -3830,12 +3808,12 @@ class Field:
         coord = coords[self.reference_image.name]
 
         w_GPS = (
-            orig_GPS[self.reference_image.name]["UR"]["lon"]
-            - orig_GPS[self.reference_image.name]["UL"]["lon"]
+                orig_GPS[self.reference_image.name]["UR"]["lon"]
+                - orig_GPS[self.reference_image.name]["UL"]["lon"]
         )
         h_GPS = (
-            orig_GPS[self.reference_image.name]["UL"]["lat"]
-            - orig_GPS[self.reference_image.name]["LL"]["lat"]
+                orig_GPS[self.reference_image.name]["UL"]["lat"]
+                - orig_GPS[self.reference_image.name]["LL"]["lat"]
         )
 
         w_img = coord["UR"][0] - coord["UL"][0]
@@ -3857,7 +3835,6 @@ class Field:
             corrected_coord = coords
 
         if orig_GPS is not None:
-
             r_w, r_h = self.get_gps_scale_factors(corrected_coord, orig_GPS)
 
         absolute_transformations = (
@@ -3898,7 +3875,6 @@ class Field:
                     diff = p_1_new - p_2_new
 
                     if orig_GPS is not None:
-
                         diff[0] = diff[0] / r_w
                         diff[1] = diff[1] / r_h
 
@@ -3926,17 +3902,17 @@ class Field:
 
             coord_center = (
                 (
-                    coords[c]["UL"][0]
-                    + coords[c]["UR"][0]
-                    + coords[c]["LL"][0]
-                    + coords[c]["LR"][0]
+                        coords[c]["UL"][0]
+                        + coords[c]["UR"][0]
+                        + coords[c]["LL"][0]
+                        + coords[c]["LR"][0]
                 )
                 / 4,
                 (
-                    coords[c]["UL"][1]
-                    + coords[c]["UR"][1]
-                    + coords[c]["LL"][1]
-                    + coords[c]["LR"][1]
+                        coords[c]["UL"][1]
+                        + coords[c]["UR"][1]
+                        + coords[c]["LL"][1]
+                        + coords[c]["LR"][1]
                 )
                 / 4,
             )

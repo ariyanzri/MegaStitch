@@ -81,4 +81,3 @@ class Configuration:
 
         # Add back the unpickable objects
         self.perc_inliers_formula = lambda n: n
-

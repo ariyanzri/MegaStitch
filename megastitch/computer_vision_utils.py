@@ -1,10 +1,12 @@
-import numpy as np
-import cv2
-import sys
 import math
-from megastitch import RANSAC
+import sys
 from enum import Enum
+
+import cv2
+import numpy as np
 from scipy.optimize import lsq_linear
+
+from megastitch import RANSAC
 
 
 class Transformation(Enum):
@@ -23,7 +25,7 @@ def get_gps_distance(lat1, lon1, lat2, lon2):
     R = 6371e3
 
     a = math.sin((phi2 - phi1) / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * (
-        math.sin((lambda2 - lambda1) / 2) ** 2
+            math.sin((lambda2 - lambda1) / 2) ** 2
     )
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
@@ -31,7 +33,6 @@ def get_gps_distance(lat1, lon1, lat2, lon2):
 
 
 def get_SIFT_points(main_img, bounding_box, max_sift_number):
-
     img = main_img.copy()
 
     sift = cv2.xfeatures2d.SIFT_create()
@@ -44,7 +45,6 @@ def get_SIFT_points(main_img, bounding_box, max_sift_number):
 
 
 def get_matches(desc1, desc2, kp1, kp2, perc_next_match=0.8, perc_top_matches=0.5):
-
     bf = cv2.BFMatcher()
     matches = bf.knnMatch(desc1, desc2, k=2)
 
@@ -73,9 +73,7 @@ def get_matches(desc1, desc2, kp1, kp2, perc_next_match=0.8, perc_top_matches=0.
 
 
 def estimate_base_transformations(pts1, pts2, tr_type):
-
     if tr_type == Transformation.translation:
-
         T = np.eye(3)
         mean_xys = np.mean(pts2 - pts1, axis=0)
 
@@ -106,7 +104,6 @@ def estimate_base_transformations(pts1, pts2, tr_type):
         return T
 
     if tr_type == Transformation.homography:
-
         T = cv2.findHomography(pts1, pts2)[0]
         # T = cv2.getPerspectiveTransform(pts1,pts2)
 
@@ -114,9 +111,8 @@ def estimate_base_transformations(pts1, pts2, tr_type):
 
 
 def estimate_transformation_from_SIFT(
-    desc1, desc2, kp1, kp2, transformation, perc_second, cores
+        desc1, desc2, kp1, kp2, transformation, perc_second, cores
 ):
-
     # if multiplied by the key points of the first image, gives the key points of the second image
     # if T multiplied by the corners of the second image (in first image system) gives the corners of the first image
 
@@ -265,22 +261,20 @@ def estimate_transformation_from_SIFT(
 
 
 def estimate_transformation_from_Inliers(
-    inliers, desc1, desc2, kp1, kp2, transformation
+        inliers, desc1, desc2, kp1, kp2, transformation
 ):
-
     src = np.float32([[kp1[m.queryIdx].pt[0], kp1[m.queryIdx].pt[1]] for m in inliers])
     dst = np.float32([[kp2[m.trainIdx].pt[0], kp2[m.trainIdx].pt[1]] for m in inliers])
 
     if (
-        len(src.shape) == 1
-        or len(dst.shape) == 1
-        or src.shape[0] < 4
-        or dst.shape[0] < 4
+            len(src.shape) == 1
+            or len(dst.shape) == 1
+            or src.shape[0] < 4
+            or dst.shape[0] < 4
     ):
         return None, None, None, None
 
     if transformation == Transformation.translation:
-
         diff = np.mean(dst - src, axis=0)
 
         T = np.eye(3)
@@ -343,7 +337,6 @@ def estimate_transformation_from_Inliers(
 
 
 def select_SIFT_points(kp, desc, bounding_box):
-
     x1 = bounding_box[0]
     y1 = bounding_box[1]
     x2 = bounding_box[2]
@@ -360,7 +353,6 @@ def draw_SIFT_points_on_img(img, kp, desc):
 
 
 def warp_homography_and_stitch(img, frame_image, frame_size, H):
-
     tmp = cv2.warpPerspective(img, H, frame_size)
 
     frame_image[frame_image == 0] = tmp[frame_image == 0]
@@ -378,7 +370,6 @@ def find_warp_homography_and_warp(pts1, pts2, img, frame_size):
 
 
 def show(img, window_name, w, h):
-
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(window_name, w, h)
     cv2.imshow(window_name, img)
@@ -404,7 +395,6 @@ def keypoint_from_tuple_decode(tpl):
 
 
 def pickle_matches(matches):
-
     if matches is None:
         return None
 
@@ -420,7 +410,6 @@ def pickle_matches(matches):
 
 
 def get_matches_from_pickled(pickled_matches):
-
     if pickled_matches is None:
         return None
 
@@ -436,7 +425,6 @@ def get_matches_from_pickled(pickled_matches):
 
 
 def non_homogenouse_homography(pts_n, pts_i):
-
     A = []
     b = []
 
@@ -444,7 +432,6 @@ def non_homogenouse_homography(pts_n, pts_i):
     pts_i = pts_i
 
     for i, p_i in enumerate(pts_i):
-
         p_n = pts_n[i]
 
         A.append([p_n[0], p_n[1], 1, 0, 0, 0, 0, 0, 0])
@@ -468,7 +455,6 @@ def non_homogenouse_homography(pts_n, pts_i):
 
 
 def decompose_similarity(T):
-
     s = math.sqrt(T[0, 0] ** 2 + T[0, 1] ** 2)
     theta = np.degrees(np.arctan2(-T[0, 1], T[0, 0]))
     t_x = T[0, 2]
@@ -478,11 +464,9 @@ def decompose_similarity(T):
 
 
 def normalize_key_points(kp, w, h, initial):
-
     new_kp = []
 
     for p in kp:
-
         p_new = cv2.KeyPoint(
             x=(p.pt[0] - w / 2) / (w),
             y=(p.pt[1] - h / 2) / (h),
@@ -502,7 +486,6 @@ def normalize_key_points(kp, w, h, initial):
 
 
 def get_best_single_good_match(T, matches, kp1, kp2):
-
     if len(matches.shape) == 1:
         first_matches = matches
     else:
@@ -526,7 +509,6 @@ def get_best_single_good_match(T, matches, kp1, kp2):
 
 
 def get_corner_wise_transformations(T, matches, kp1, kp2, w, h):
-
     best_m = get_best_single_good_match(T, matches, kp1, kp2)
 
     p1 = np.array([kp1[best_m.queryIdx].pt[0], kp1[best_m.queryIdx].pt[1]])
@@ -574,7 +556,6 @@ def get_corner_wise_transformations(T, matches, kp1, kp2, w, h):
 
 
 def build_transformation(transformation_type, params):
-
     T_1 = np.eye(3)
 
     if transformation_type == Transformation.similarity:
@@ -596,7 +577,6 @@ def build_transformation(transformation_type, params):
 
 
 def histogram_equalization(img):
-
     if len(img.shape) == 2:
         channel_0 = cv2.equalizeHist(img[:, :])
 
@@ -614,12 +594,10 @@ def histogram_equalization(img):
 
 
 def get_full_transformation(src, dst):
-
     A = []
     b = []
 
     for i, p1 in enumerate(src):
-
         p2 = dst[i]
 
         A.append([p1[0], p1[1], 1, 0, 0, 0, 0, 0, 0])
@@ -643,12 +621,10 @@ def get_full_transformation(src, dst):
 
 
 def get_Similarity_Affine(src, dst):
-
     A = []
     b = []
 
     for i, p1 in enumerate(src):
-
         p2 = dst[i]
 
         A.append([p1[0], p1[1], 1, 0, 0, 0])
@@ -671,7 +647,6 @@ def get_Similarity_Affine(src, dst):
 
 
 def Jsonify(transformation_dict):
-
     jsonified = {}
 
     for img1 in transformation_dict:
@@ -734,7 +709,6 @@ def Unjsonify(jsonified_dict):
 
 
 def generate_n_distinc_colors(n):
-
     list_colors = [
         (160, 82, 45),
         (47, 79, 79),
@@ -775,7 +749,6 @@ def generate_n_distinc_colors(n):
 
 
 def get_GCP_sizes(dataset, method):
-
     if dataset == "DLLFN" and method == "BNDL-ADJ":
         s1 = 30
         s2 = 40
